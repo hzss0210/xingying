@@ -771,6 +771,26 @@
     </script>
 
     <script type="module">
+        // 加载大 JSON 数据
+const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/_2026-07-30%20%286%29.json';
+
+async function loadExhibitionData() {
+  try {
+    const response = await fetch(jsonUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('展馆数据加载成功！', data);
+    return data;
+  } catch (error) {
+    console.error('加载展馆数据失败：', error);
+    return null;
+  }
+}
+
+// 等待数据加载完成后，再启动展馆
+const exhibitionData = await loadExhibitionData();
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
@@ -3188,23 +3208,3 @@
 </body>
 
 </html>
-// 使用 encodeURI 处理带特殊字符的链接，这样最安全
-const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/_2026-07-30%20%286%29.json';
-
-async function loadData() {
-  try {
-    const response = await fetch(jsonUrl);
-    if (!response.ok) {
-      throw new Error(`加载失败: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log('数据加载成功！', data);
-    // 在这里调用你的展馆渲染函数，把 data 传进去
-    // 比如：renderExhibition(data);
-  } catch (error) {
-    console.error('加载数据出错:', error);
-  }
-}
-
-// 调用函数
-loadData();
