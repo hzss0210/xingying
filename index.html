@@ -768,29 +768,42 @@
                 "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
             }
         }
-    </script>
+      <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 
     <script type="module">
-        // 加载大 JSON 数据
-const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/_2026-07-30%20%286%29.json';
+        // 加载大 JSON 数据（压缩版 .gz）
+        const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/2026.json.gz';
 
-async function loadExhibitionData() {
-  try {
-    const response = await fetch(jsonUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log('展馆数据加载成功！', data);
-    return data;
-  } catch (error) {
-    console.error('加载展馆数据失败：', error);
-    return null;
-  }
-}
+        async function loadExhibitionData() {
+            try {
+                console.log('开始下载压缩文件...');
+                const response = await fetch(jsonUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-// 等待数据加载完成后，再启动展馆
-const exhibitionData = await loadExhibitionData();
+                console.log('正在解压数据...');
+                // 获取二进制数据（因为现在是 .gz 文件）
+                const arrayBuffer = await response.arrayBuffer();
+                const byteArray = new Uint8Array(arrayBuffer);
+
+                // 用 pako 解压成字符串
+                const decompressedText = pako.ungzip(byteArray, { to: 'string' });
+
+                console.log('正在解析 JSON...');
+                // 解析为 JavaScript 对象
+                const data = JSON.parse(decompressedText);
+
+                console.log('展馆数据加载成功！', data);
+                return data;
+            } catch (error) {
+                console.error('加载展馆数据失败：', error);
+                return null;
+            }
+        }
+
+        // 等待数据加载完成后，再启动展馆
+        const exhibitionData = await loadExhibitionData();
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
