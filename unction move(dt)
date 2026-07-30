@@ -2376,7 +2376,7 @@ if (lightsData.length > 0) {
         });
 
         // --- 导入模型 ---
-        modelInput.addEventListener('change', async (e) => {
+   modelInput.addEventListener('change', async (e) => {
             const files = e.target.files;
             if (!files.length) { modelInput.value = ''; return; }
 
@@ -2429,6 +2429,41 @@ if (lightsData.length > 0) {
 
                 model.traverse((child) => {
                     if (child.isMesh) {
+                        const borderMat = new THREE.LineBasicMaterial({
+                            color: 0x88ddff, transparent: true,
+                            opacity: 0
+                        });
+                        const border = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry),
+                            borderMat);
+                        child.add(border);
+                        child.userData.borderMat = borderMat;
+                    }
+                });
+
+                // ✅ 修复：使用 0x888888 替代未定义的 color 变量
+                model.userData = {
+                    isObject: true,
+                    id: ++objectIdCounter,
+                    name: file.name,
+                    color: 0x888888,
+                    normal: normal ? normal.clone() : null,
+                    originalColor: 0x888888,
+                    isImported: true
+                };
+
+                scene.add(model);
+                customObjects.push(model);
+                pushHistory(`导入 ${file.name}`, { obj: model });
+                showToast(`✅ 已导入: ${file.name}`, 2000);
+
+            } catch (err) {
+                console.error('导入失败:', err);
+                showToast('❌ 导入失败: ' + err.message, 2000);
+            }
+
+            modelInput.value = '';
+        });
+        
                         const borderMat = new THREE.LineBasicMaterial({
                             color: 0x88ddff, transparent: true,
                             opacity: 0
