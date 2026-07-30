@@ -4,21 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>形影之望：中西花窗艺术展 </title>
+    <title>形影之望：中西花窗艺术展</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             overflow: hidden;
             font-family: "Microsoft YaHei", sans-serif;
             background: #111;
             color: #eee;
         }
-
         #info {
             position: absolute;
             top: 20px;
@@ -35,11 +33,9 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             white-space: nowrap;
         }
-
         #info span {
             color: #88ddff;
         }
-
         #loading {
             position: absolute;
             top: 0;
@@ -56,7 +52,6 @@
             z-index: 200;
             transition: opacity 0.5s;
         }
-
         #loading .spinner {
             width: 40px;
             height: 40px;
@@ -66,24 +61,20 @@
             animation: spin 0.8s linear infinite;
             margin-bottom: 16px;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-
         #loading.hide {
             opacity: 0;
             pointer-events: none;
         }
-
         #loadStatus {
             font-size: 13px;
             color: rgba(255, 255, 255, 0.4);
             margin-top: 8px;
         }
-
         #status {
             position: absolute;
             top: 80px;
@@ -100,11 +91,9 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-
         #status.show {
             opacity: 1;
         }
-
         #modeIndicator {
             position: absolute;
             top: 80px;
@@ -119,12 +108,10 @@
             z-index: 100;
             pointer-events: none;
         }
-
         #modeIndicator .highlight {
             color: #88ddff;
             font-weight: bold;
         }
-
         #toast {
             position: absolute;
             bottom: 150px;
@@ -142,11 +129,9 @@
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         #toast.show {
             opacity: 1;
         }
-
         #toolbar {
             position: absolute;
             bottom: 80px;
@@ -164,7 +149,6 @@
             justify-content: center;
             max-width: 98vw;
         }
-
         .btn {
             background: rgba(255, 255, 255, 0.06);
             color: #ddd;
@@ -177,95 +161,76 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
-
         .btn:hover {
             background: rgba(136, 221, 255, 0.12);
             border-color: rgba(136, 221, 255, 0.2);
             transform: scale(1.03);
         }
-
         .btn-primary {
             background: rgba(68, 136, 255, 0.15);
             border-color: rgba(68, 136, 255, 0.2);
         }
-
         .btn-primary:hover {
             background: rgba(68, 136, 255, 0.25);
         }
-
         .btn-danger {
             background: rgba(255, 70, 70, 0.1);
             border-color: rgba(255, 70, 70, 0.15);
         }
-
         .btn-danger:hover {
             background: rgba(255, 70, 70, 0.2);
         }
-
         .btn-success {
             background: rgba(60, 200, 150, 0.1);
             border-color: rgba(60, 200, 150, 0.15);
         }
-
         .btn-success:hover {
             background: rgba(60, 200, 150, 0.2);
         }
-
         .btn-warning {
             background: rgba(255, 180, 50, 0.1);
             border-color: rgba(255, 180, 50, 0.15);
         }
-
         .btn-warning:hover {
             background: rgba(255, 180, 50, 0.2);
         }
-
         .btn-pink {
             background: rgba(255, 100, 180, 0.1);
             border-color: rgba(255, 100, 180, 0.15);
         }
-
         .btn-pink:hover {
             background: rgba(255, 100, 180, 0.2);
         }
-
         .btn-purple {
             background: rgba(150, 80, 200, 0.1);
             border-color: rgba(150, 80, 200, 0.15);
         }
-
         .btn-purple:hover {
             background: rgba(150, 80, 200, 0.2);
         }
-
         .btn.active {
             background: rgba(136, 221, 255, 0.15);
             border-color: #88ddff;
         }
-
         #brightnessControls {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         #brightnessControls label {
             font-size: 11px;
             color: #ddd;
             white-space: nowrap;
         }
-
         #brightnessSlider {
             width: 150px;
         }
-
         #brightnessValue {
             min-width: 36px;
             text-align: right;
             color: #fff;
             font-size: 11px;
         }
-
         #leftToolbar {
             position: absolute;
             top: 50%;
@@ -282,7 +247,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
-
         #leftToolbar .tool-label {
             font-size: 9px;
             color: rgba(255, 255, 255, 0.3);
@@ -291,7 +255,6 @@
             letter-spacing: 2px;
             user-select: none;
         }
-
         #leftToolbar .tool-btn {
             width: 40px;
             height: 40px;
@@ -307,13 +270,11 @@
             justify-content: center;
             position: relative;
         }
-
         #leftToolbar .tool-btn:hover {
             background: rgba(136, 221, 255, 0.08);
             border-color: rgba(136, 221, 255, 0.15);
             transform: scale(1.05);
         }
-
         #leftToolbar .tool-btn .tooltip {
             position: absolute;
             left: 48px;
@@ -329,23 +290,19 @@
             pointer-events: none;
             transition: opacity 0.2s;
         }
-
         #leftToolbar .tool-btn:hover .tooltip {
             opacity: 1;
         }
-
         #leftToolbar .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.06);
             margin: 4px 0;
         }
-
         #leftToolbar .tool-btn.drag-mode {
             background: rgba(255, 170, 0, 0.15);
             border-color: #ffaa44;
             box-shadow: 0 0 12px rgba(255, 170, 0, 0.2);
         }
-
         #contextMenu {
             position: absolute;
             display: none;
@@ -358,7 +315,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
         }
-
         #contextMenu .item {
             padding: 10px 18px;
             color: #ddd;
@@ -374,37 +330,30 @@
             align-items: center;
             gap: 12px;
         }
-
         #contextMenu .item:hover {
             background: rgba(68, 136, 255, 0.15);
         }
-
         #contextMenu .item.danger {
             color: #ff6666;
         }
-
         #contextMenu .item.danger:hover {
             background: rgba(255, 70, 70, 0.15);
         }
-
         #contextMenu .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.05);
             margin: 4px 12px;
         }
-
         #contextMenu .item .icon {
             font-size: 16px;
             width: 28px;
             text-align: center;
         }
-
         #fileInput,
         #importInput,
         #modelInput {
             display: none;
         }
-
         #tip {
             position: absolute;
             bottom: 140px;
@@ -421,7 +370,6 @@
             border-radius: 16px;
             backdrop-filter: blur(2px);
         }
-
         #tip kbd {
             background: rgba(255, 255, 255, 0.06);
             padding: 1px 8px;
@@ -429,7 +377,6 @@
             font-size: 10px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
-
         #toastCoord {
             position: absolute;
             top: 50%;
@@ -451,12 +398,10 @@
             max-width: 90vw;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
         }
-
         #toastCoord.show {
             opacity: 1;
             pointer-events: auto;
         }
-
         #toastCoord code {
             background: rgba(255, 255, 255, 0.05);
             padding: 2px 10px;
@@ -464,7 +409,6 @@
             color: #88ddff;
             font-size: 13px;
         }
-
         #toastCoord .close-btn {
             margin-top: 12px;
             background: rgba(255, 255, 255, 0.06);
@@ -476,25 +420,20 @@
             font-size: 13px;
             pointer-events: auto;
         }
-
         #toastCoord .close-btn:hover {
             background: rgba(255, 255, 255, 0.12);
         }
-
         #toastCoord .hint {
             color: #888;
             font-size: 12px;
             margin-top: 6px;
         }
-
-        /* 缩放控制手柄 */
         #scaleHandles {
             position: absolute;
             display: none;
             z-index: 250;
             pointer-events: none;
         }
-
         #scaleHandles .handle {
             position: absolute;
             width: 12px;
@@ -507,46 +446,38 @@
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.15s;
         }
-
         #scaleHandles .handle:hover {
             transform: scale(1.3);
         }
-
         #scaleHandles .handle-x {
             top: 50%;
             right: -10px;
             transform: translateY(-50%);
             cursor: ew-resize;
         }
-
         #scaleHandles .handle-y {
             top: -10px;
             left: 50%;
             transform: translateX(-50%);
             cursor: ns-resize;
         }
-
         #scaleHandles .handle-z {
             bottom: 50%;
             left: -10px;
             transform: translateY(50%);
             cursor: ew-resize;
         }
-
         #scaleHandles .handle-xyz {
             bottom: -10px;
             right: -10px;
             cursor: nwse-resize;
         }
-
-        /* 图片控制手柄 */
         #resizeHandles {
             position: absolute;
             display: none;
             z-index: 250;
             pointer-events: none;
         }
-
         #resizeHandles .handle {
             position: absolute;
             width: 14px;
@@ -559,35 +490,29 @@
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.15s;
         }
-
         #resizeHandles .handle:hover {
             transform: scale(1.2);
         }
-
         #resizeHandles .handle-tl {
             top: -7px;
             left: -7px;
             cursor: nw-resize;
         }
-
         #resizeHandles .handle-tr {
             top: -7px;
             right: -7px;
             cursor: ne-resize;
         }
-
         #resizeHandles .handle-bl {
             bottom: -7px;
             left: -7px;
             cursor: sw-resize;
         }
-
         #resizeHandles .handle-br {
             bottom: -7px;
             right: -7px;
             cursor: se-resize;
         }
-
         @media (max-width: 700px) {
             #info {
                 font-size: 13px;
@@ -595,7 +520,6 @@
                 top: 12px;
                 white-space: normal;
             }
-
             #toolbar {
                 bottom: 70px;
                 padding: 6px 10px;
@@ -603,64 +527,53 @@
                 width: 98%;
                 border-radius: 30px;
             }
-
             .btn {
                 font-size: 10px;
                 padding: 3px 8px;
             }
-
             #tip {
                 bottom: 120px;
                 font-size: 10px;
                 padding: 4px 12px;
             }
-
             #status {
                 top: 65px;
                 right: 10px;
                 font-size: 10px;
                 padding: 3px 10px;
             }
-
             #modeIndicator {
                 top: 65px;
                 left: 10px;
                 font-size: 10px;
                 padding: 3px 10px;
             }
-
             #contextMenu {
                 min-width: 130px;
             }
-
             #contextMenu .item {
                 font-size: 12px;
                 padding: 8px 14px;
             }
-
             #toastCoord {
                 padding: 16px 20px;
                 font-size: 13px;
                 width: 92vw;
             }
-
             #leftToolbar {
                 left: 8px;
                 padding: 6px 4px;
                 gap: 4px;
             }
-
             #leftToolbar .tool-btn {
                 width: 32px;
                 height: 32px;
                 font-size: 14px;
                 border-radius: 8px;
             }
-
             #leftToolbar .tool-btn .tooltip {
                 display: none;
             }
-
             #leftToolbar .tool-label {
                 font-size: 7px;
             }
@@ -682,26 +595,18 @@
         <div id="coordContent"></div>
         <div class="hint">👆 选中代码按 Ctrl+C 复制</div><button class="close-btn" id="coordClose">关闭</button>
     </div>
-
-    <!-- 左侧工具栏 -->
     <div id="leftToolbar">
         <div class="tool-label">插入</div>
         <button class="tool-btn" id="btnCube" title="正方体"><span>🧊</span><span class="tooltip">正方体</span></button>
         <button class="tool-btn" id="btnBox" title="长方体"><span>📦</span><span class="tooltip">长方体</span></button>
         <div class="divider"></div>
-        <button class="tool-btn" id="btnImportModel" title="导入模型"><span>📁</span><span
-                class="tooltip">导入模型</span></button>
+        <button class="tool-btn" id="btnImportModel" title="导入模型"><span>📁</span><span class="tooltip">导入模型</span></button>
         <div class="divider"></div>
-        <button class="tool-btn" id="btnUndo" title="撤销" style="opacity:0.4;"><span>↩️</span><span
-                class="tooltip">撤销</span></button>
-        <button class="tool-btn" id="btnSave" title="保存" style="color:#4a7ab5;"><span>💾</span><span
-                class="tooltip">保存</span></button>
+        <button class="tool-btn" id="btnUndo" title="撤销" style="opacity:0.4;"><span>↩️</span><span class="tooltip">撤销</span></button>
+        <button class="tool-btn" id="btnSave" title="保存" style="color:#4a7ab5;"><span>💾</span><span class="tooltip">保存</span></button>
         <div class="divider"></div>
-        <button class="tool-btn" id="btnClearObjects" title="清空所有" style="color:#cc4444;"><span>🗑️</span><span
-                class="tooltip">清空所有</span></button>
+        <button class="tool-btn" id="btnClearObjects" title="清空所有" style="color:#cc4444;"><span>🗑️</span><span class="tooltip">清空所有</span></button>
     </div>
-
-    <!-- 底部工具栏 -->
     <div id="toolbar">
         <button class="btn btn-primary" id="btnReset">📍原点</button>
         <button class="btn btn-primary" id="btnHall3">🏛️ 场馆3</button>
@@ -721,15 +626,12 @@
             <span id="brightnessValue">0.70</span>
         </div>
     </div>
-
     <div id="tip">
         <kbd>E/Q</kbd>升降视角 · <kbd>点击插入</kbd>拖拽放置 · <kbd>双击编辑</kbd> · <kbd>右键墙面</kbd>上传图片/放置灯光
     </div>
-
     <input type="file" id="fileInput" accept="image/*" multiple>
     <input type="file" id="importInput" accept=".json">
     <input type="file" id="modelInput" accept=".glb,.gltf,.obj,.dae">
-
     <div id="contextMenu">
         <button class="item" id="menuUpload"><span class="icon">📷</span> 上传图片</button>
         <button class="item" id="menuLight"><span class="icon">💡</span> 放置灯光</button>
@@ -744,16 +646,12 @@
         <div class="divider"></div>
         <button class="item" id="menuCancel"><span class="icon">✕</span> 取消</button>
     </div>
-
-    <!-- 缩放控制手柄 -->
     <div id="scaleHandles">
         <div class="handle handle-x" data-axis="x" title="宽度"></div>
         <div class="handle handle-y" data-axis="y" title="高度"></div>
         <div class="handle handle-z" data-axis="z" title="厚度"></div>
         <div class="handle handle-xyz" data-axis="xyz" title="整体缩放"></div>
     </div>
-
-    <!-- 图片控制手柄 -->
     <div id="resizeHandles">
         <div class="handle handle-tl" data-corner="tl"></div>
         <div class="handle handle-tr" data-corner="tr"></div>
@@ -761,13 +659,18 @@
         <div class="handle handle-br" data-corner="br"></div>
     </div>
 
-  <script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js">
+    </script>
 
     <script type="module">
-        // ===== 1. 所有 import 放在最顶部 =====
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
@@ -777,8 +680,9 @@
         import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
         import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-        // ===== 2. 加载大 JSON 数据（压缩版 .gz） =====
-        const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/2026.json.gz';
+        // 数据加载
+        const jsonUrl =
+        'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/2026.json.gz';
 
         async function loadExhibitionData() {
             try {
@@ -787,15 +691,12 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
                 console.log('正在解压数据...');
                 const arrayBuffer = await response.arrayBuffer();
                 const byteArray = new Uint8Array(arrayBuffer);
                 const decompressedText = pako.ungzip(byteArray, { to: 'string' });
-
                 console.log('正在解析 JSON...');
                 const data = JSON.parse(decompressedText);
-
                 console.log('展馆数据加载成功！', data);
                 return data;
             } catch (error) {
@@ -804,120 +705,10 @@
             }
         }
 
-        // ===== 3. 等待数据加载完成 =====
         const exhibitionData = await loadExhibitionData();
-
         console.log('数据加载完成，开始构建场景...');
-        console.log('图片数量:', exhibitionData?.images?.length);
-        console.log('灯光数量:', exhibitionData?.lights?.length);
-        console.log('图片数据示例:', exhibitionData?.images?.[0]);
 
-        // ===== 4. 定义构建展馆的函数 =====
-        function buildExhibition(data, scene) {
-            if (!data) {
-                console.error('没有数据可渲染');
-                return;
-            }
-
-            console.log('开始构建展馆，图片数量:', data.images?.length || 0);
-
-            const textureLoader = new THREE.TextureLoader();
-
-            if (data.images && data.images.length > 0) {
-                data.images.forEach((imgData, index) => {
-                    try {
-                        const texture = textureLoader.load(imgData.url);
-                        const width = imgData.size || 1;
-                        const height = width / (imgData.asp || 1);
-                        const geometry = new THREE.PlaneGeometry(width, height);
-                        const material = new THREE.MeshBasicMaterial({
-                            map: texture,
-                            side: THREE.DoubleSide,
-                            transparent: true,
-                            depthWrite: false
-                        });
-                        const mesh = new THREE.Mesh(geometry, material);
-
-                        if (imgData.position && imgData.position.length === 3) {
-                            mesh.position.set(
-                                imgData.position[0],
-                                imgData.position[1],
-                                imgData.position[2]
-                            );
-                        }
-
-                        if (imgData.quaternion && imgData.quaternion.length === 4) {
-                            mesh.quaternion.set(
-                                imgData.quaternion[0],
-                                imgData.quaternion[1],
-                                imgData.quaternion[2],
-                                imgData.quaternion[3]
-                            );
-                        }
-
-                        scene.add(mesh);
-                    } catch (err) {
-                        console.error(`创建图片 ${index} 失败:`, err);
-                    }
-                });
-                console.log(`✅ 已创建 ${data.images.length} 张图片`);
-            }
-
-            // 处理灯光（使用点光源，而非环境光）
-            const lightsData = data.lights || data.Lights || [];
-            if (lightsData.length > 0) {
-                lightsData.forEach((lightData, index) => {
-                    try {
-                        // 从 JSON 读取灯光位置和强度
-                        const pos = lightData.position || [0, 2, 0];
-                        const intensity = lightData.intensity || 1.0;
-                        const color = lightData.color || 0xffeedd;
-
-                        const light = new THREE.PointLight(color, intensity * 0.15, 12);
-                        light.position.set(pos[0], pos[1], pos[2]);
-                        scene.add(light);
-
-                        // 可选：添加一个小球体表示灯光位置
-                        if (index < 5) { // 只显示前5个的位置标记，避免太多
-                            const sphere = new THREE.Mesh(
-                                new THREE.SphereGeometry(0.08, 8, 8),
-                                new THREE.MeshBasicMaterial({ color: 0xffdd88 })
-                            );
-                            sphere.position.copy(light.position);
-                            scene.add(sphere);
-                        }
-                    } catch (err) {
-                        console.warn(`灯光 ${index} 加载失败:`, err);
-                    }
-                });
-                console.log(`✅ 已创建 ${lightsData.length} 个点光源`);
-            }
-        }
-
-        // ===== 5. DOM 引用 =====
-        const $ = id => document.getElementById(id);
-        const loading = $('loading');
-        const loadStatus = $('loadStatus');
-        const toast = $('toast');
-        const status = $('status');
-        const modeText = $('modeText');
-        const coordToast = $('toastCoord');
-        const coordContent = $('coordContent');
-        const fileInput = $('fileInput');
-        const importInput = $('importInput');
-        const modelInput = $('modelInput');
-        const ctx = $('contextMenu');
-        const scaleHandles = $('scaleHandles');
-        const resizeHandles = $('resizeHandles');
-
-        function showToast(msg, dur = 1500) {
-            toast.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toast._t);
-            toast._t = setTimeout(() => toast.classList.remove('show'), dur);
-        }
-
-        // ===== 6. 场景代码 =====
+        // 场景
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x1a1a2a);
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -949,7 +740,7 @@
         controls.enableZoom = false;
         controls.update();
 
-        // --- Bloom ---
+        // Bloom
         const composer = new EffectComposer(renderer);
         const renderPass = new RenderPass(scene, camera);
         composer.addPass(renderPass);
@@ -959,11 +750,71 @@
         );
         composer.addPass(bloomPass);
 
-        // ===== 7. 调用 buildExhibition =====
-        buildExhibition(exhibitionData, scene);
+        // 构建展馆
+        function buildExhibition(data) {
+            if (!data) {
+                console.error('没有数据可渲染');
+                return;
+            }
+            console.log('开始构建展馆，图片数量:', data.images?.length || 0);
+            const textureLoader = new THREE.TextureLoader();
+            if (data.images && data.images.length > 0) {
+                data.images.forEach((imgData, index) => {
+                    try {
+                        const texture = textureLoader.load(imgData.url);
+                        const width = imgData.size || 1;
+                        const height = width / (imgData.asp || 1);
+                        const geometry = new THREE.PlaneGeometry(width, height);
+                        const material = new THREE.MeshBasicMaterial({
+                            map: texture,
+                            side: THREE.DoubleSide,
+                            transparent: true,
+                            depthWrite: false
+                        });
+                        const mesh = new THREE.Mesh(geometry, material);
+                        if (imgData.position && imgData.position.length === 3) {
+                            mesh.position.set(imgData.position[0], imgData.position[1], imgData.position[2]);
+                        }
+                        if (imgData.quaternion && imgData.quaternion.length === 4) {
+                            mesh.quaternion.set(imgData.quaternion[0], imgData.quaternion[1], imgData.quaternion[2],
+                                imgData.quaternion[3]);
+                        }
+                        scene.add(mesh);
+                    } catch (err) {
+                        console.error(`创建图片 ${index} 失败:`, err);
+                    }
+                });
+                console.log(`✅ 已创建 ${data.images.length} 张图片`);
+            }
+            const lightsData = data.lights || data.Lights || [];
+            if (lightsData.length > 0) {
+                lightsData.forEach((lightData, index) => {
+                    try {
+                        const pos = lightData.position || [0, 2, 0];
+                        const intensity = lightData.intensity || 1.0;
+                        const color = lightData.color || 0xffeedd;
+                        const light = new THREE.PointLight(color, intensity * 0.15, 12);
+                        light.position.set(pos[0], pos[1], pos[2]);
+                        scene.add(light);
+                        if (index < 5) {
+                            const sphere = new THREE.Mesh(
+                                new THREE.SphereGeometry(0.08, 8, 8),
+                                new THREE.MeshBasicMaterial({ color: 0xffdd88 })
+                            );
+                            sphere.position.copy(light.position);
+                            scene.add(sphere);
+                        }
+                    } catch (err) {
+                        console.warn(`灯光 ${index} 加载失败:`, err);
+                    }
+                });
+                console.log(`✅ 已创建 ${lightsData.length} 个点光源`);
+            }
+        }
 
+        buildExhibition(exhibitionData);
 
-        // ===== 9. 窗口大小自适应 =====
+        // 窗口自适应
         window.addEventListener('resize', () => {
             const w = window.innerWidth;
             const h = window.innerHeight;
@@ -973,18 +824,14 @@
             composer.setSize(w, h);
         });
 
-        // ===== 10. 你原有的其他代码（灯光控制、展馆、对象管理等）继续放在这里 =====
-        // --- 灯光系统 ---
+        // 灯光系统
         let lightsOn = true;
         let globalBright = false;
-
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
-
         const allLights = [ambientLight];
         const originalIntensities = [ambientLight.intensity];
         const BASE_EXPOSURE = 0.7;
-        lightsOn = true;
 
         function updateBrightness(value) {
             renderer.toneMappingExposure = value;
@@ -993,21 +840,20 @@
                 light.intensity = lightsOn ? originalIntensities[i] * scale * (globalBright ? 2.0 : 1.0) : 0;
             });
         }
-
         updateBrightness(BASE_EXPOSURE);
 
         function toggleLights() {
             lightsOn = !lightsOn;
             if (globalBright && !lightsOn) {
                 globalBright = false;
-                $('btnGlobalBright').textContent = '☀️全局明亮';
-                $('btnGlobalBright').classList.remove('active');
+                document.getElementById('btnGlobalBright').textContent = '☀️全局明亮';
+                document.getElementById('btnGlobalBright').classList.remove('active');
                 bloomPass.strength = 0.3;
             }
             allLights.forEach((light, i) => {
                 light.intensity = lightsOn ? originalIntensities[i] : 0;
             });
-            const btn = $('btnToggleLight');
+            const btn = document.getElementById('btnToggleLight');
             btn.textContent = lightsOn ? '💡开灯' : '🌙关灯';
             btn.classList.toggle('active', !lightsOn);
             showToast(lightsOn ? '💡 灯光已开启' : '🌙 灯光已关闭', 1000);
@@ -1019,12 +865,12 @@
                 allLights.forEach((light, i) => {
                     light.intensity = originalIntensities[i] * 2.0;
                 });
-                $('btnGlobalBright').textContent = '🌥️全局明亮';
-                $('btnGlobalBright').classList.add('active');
+                document.getElementById('btnGlobalBright').textContent = '🌥️全局明亮';
+                document.getElementById('btnGlobalBright').classList.add('active');
                 if (!lightsOn) {
                     lightsOn = true;
-                    $('btnToggleLight').textContent = '💡开灯';
-                    $('btnToggleLight').classList.remove('active');
+                    document.getElementById('btnToggleLight').textContent = '💡开灯';
+                    document.getElementById('btnToggleLight').classList.remove('active');
                 }
                 bloomPass.strength = 0.8;
                 showToast('☀️ 全局明亮模式已开启', 1200);
@@ -1032,8 +878,8 @@
                 allLights.forEach((light, i) => {
                     light.intensity = lightsOn ? originalIntensities[i] : 0;
                 });
-                $('btnGlobalBright').textContent = '☀️全局明亮';
-                $('btnGlobalBright').classList.remove('active');
+                document.getElementById('btnGlobalBright').textContent = '☀️全局明亮';
+                document.getElementById('btnGlobalBright').classList.remove('active');
                 bloomPass.strength = 0.3;
                 showToast('☀️ 全局明亮模式已关闭', 1200);
             }
@@ -1043,41 +889,47 @@
             light.userData.originalIntensity = originalIntensities[i];
         });
 
-        // --- 展馆 ---
+        // Toast
+        function showToast(msg, dur = 1500) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove('show'), dur);
+        }
+
+        // 展馆
         let isOverviewMode = false;
         let modelLoaded = false;
         const galleryGroup = new THREE.Group();
         scene.add(galleryGroup);
-
         const waypoints = [];
         let waypointId = 0;
         const waypointMarkers = [];
 
-        // --- 对象管理 ---
+        // 对象管理
         const customObjects = [];
         let selectedObject = null;
         let isEditing = false;
         let objectIdCounter = 0;
         let suppressHistory = false;
 
-        // --- 图片管理 ---
+        // 图片管理
         const images = [];
         let selectedImage = null;
         let isImageEditing = false;
         let imageIdCounter = 0;
         let defaultImageSize = 1.0;
 
-        // --- 灯光物体 ---
+        // 灯光物体
         const lightObjects = [];
         let selectedLight = null;
         let isLightEditing = false;
         let lightIdCounter = 0;
         const DEFAULT_LIGHT_SIZE = 0.6;
         const DEFAULT_LIGHT_INTENSITY = 2.0;
-
         let pendingPos = null;
 
-        // --- 颜色预设 ---
         const COLORS = {
             black: 0x222222,
             white: 0xf0f0f0,
@@ -1085,30 +937,29 @@
             default: 0x888888
         };
 
-        // ===== 你后面的其他代码（按钮事件、交互逻辑等）继续放在这里 =====
-        // ... 你的其他代码 ...
-
-        // --- 备用展馆 ---
+        // 备用展馆
         function buildSimpleRoom() {
             const g = new THREE.Group();
             const wallMat = new THREE.MeshBasicMaterial({
-                color: 0x3a3a5a, roughness: 0.8, metalness: 0.0, side: THREE
-                    .DoubleSide
+                color: 0x3a3a5a,
+                roughness: 0.8,
+                metalness: 0.0,
+                side: THREE.DoubleSide
             });
             const floorMat = new THREE.MeshBasicMaterial({ color: 0x2a2a4a, roughness: 0.9, side: THREE.DoubleSide });
             const ceilMat = new THREE.MeshBasicMaterial({
-                color: 0x2a2a4a, transparent: true, opacity: 0.2, side: THREE
-                    .DoubleSide
+                color: 0x2a2a4a,
+                transparent: true,
+                opacity: 0.2,
+                side: THREE.DoubleSide
             });
             const s = 6,
                 h = 3.5;
-
             const f = new THREE.Mesh(new THREE.PlaneGeometry(s * 2, s * 2), floorMat);
             f.rotation.x = -Math.PI / 2;
             f.position.y = -0.5;
             f.receiveShadow = true;
             g.add(f);
-
             [
                 [0, -s, 0],
                 [0, s, Math.PI],
@@ -1121,7 +972,6 @@
                 w.receiveShadow = true;
                 g.add(w);
             });
-
             const c = new THREE.Mesh(new THREE.PlaneGeometry(s * 2, s * 2), ceilMat);
             c.rotation.x = Math.PI / 2;
             c.position.y = h - 0.5;
@@ -1132,49 +982,18 @@
         const tempRoom = buildSimpleRoom();
         galleryGroup.add(tempRoom);
 
-        // --- 加载 mm.dae ---
+        // 加载 mm.dae
         const MODEL_PATH = './mm.dae';
         const loader = new ColladaLoader();
         let loadingHidden = false;
 
-        function applyDarkColor(obj) {
-            obj.traverse((child) => {
-                if (child.isMesh) {
-                    const mats = Array.isArray(child.material) ? child.material : [child.material];
-                    mats.forEach(mat => {
-                        if (child.position.y < -0.3) {
-                            mat.color.setHex(0x2a2a4a);
-                        } else if (child.position.y > 3.0) {
-                            mat.color.setHex(0x2a2a4a);
-                            mat.transparent = true;
-                            mat.opacity = 0.2;
-                        } else {
-                            mat.color.setHex(0x3a3a5a);
-                        }
-                        if (mat.emissive) mat.emissive.setHex(0x000000);
-                        mat.roughness = 0.7;
-                        mat.metalness = 0.0;
-                    });
-                }
-            });
-        }
-
         function hideLoading() {
             if (loadingHidden) return;
             loadingHidden = true;
-            setTimeout(() => loading.classList.add('hide'), 300);
-        }
-
-        function orientImageVertical(mesh) {
-            const dir = new THREE.Vector3();
-            camera.getWorldDirection(dir);
-            dir.y = 0;
-            if (dir.lengthSq() < 0.0001) dir.set(0, 0, 1);
-            dir.normalize();
-            mesh.userData.normal = dir.clone();
-            mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir);
-            const height = mesh.userData.sz || 1.0;
-            mesh.position.y = height / 2 + 0.02;
+            setTimeout(() => {
+                const loading = document.getElementById('loading');
+                loading.classList.add('hide');
+            }, 300);
         }
 
         loader.load(MODEL_PATH,
@@ -1188,7 +1007,7 @@
                 const model = collada.scene;
                 galleryGroup.add(model);
                 modelLoaded = true;
-                loadStatus.textContent = '✅ 模型加载成功！';
+                document.getElementById('loadStatus').textContent = '✅ 模型加载成功！';
                 controls.target.copy(START_TARGET);
                 controls.update();
                 hideLoading();
@@ -1196,11 +1015,11 @@
             },
             (xhr) => {
                 const pct = Math.round((xhr.loaded / xhr.total) * 100);
-                loadStatus.textContent = `加载模型 ${pct}%...`;
+                document.getElementById('loadStatus').textContent = `加载模型 ${pct}%...`;
             },
             () => {
                 modelLoaded = true;
-                loadStatus.textContent = '✅ 使用备用展馆';
+                document.getElementById('loadStatus').textContent = '✅ 使用备用展馆';
                 hideLoading();
             }
         );
@@ -1208,7 +1027,7 @@
         setTimeout(() => {
             if (!loadingHidden) {
                 modelLoaded = true;
-                loadStatus.textContent = '✅ 使用备用展馆';
+                document.getElementById('loadStatus').textContent = '✅ 使用备用展馆';
                 hideLoading();
             }
         }, 5000);
@@ -1219,9 +1038,7 @@
         grid.material.opacity = 0.2;
         scene.add(grid);
 
-        // ============================================================
-        //  创建几何体
-        // ============================================================
+        // 创建几何体
         function createGeometry(type, pos, normal, color) {
             let geometry;
             const s = 0.6;
@@ -1235,7 +1052,6 @@
                 default:
                     geometry = new THREE.BoxGeometry(s, s, s);
             }
-
             const matColor = color || COLORS.default;
             const mat = new THREE.MeshStandardMaterial({
                 color: matColor,
@@ -1243,7 +1059,6 @@
                 metalness: 0.1
             });
             const mesh = new THREE.Mesh(geometry, mat);
-
             const offsetPos = pos.clone();
             if (normal && normal.length() > 0.001) {
                 offsetPos.add(normal.clone().normalize().multiplyScalar(0.02));
@@ -1252,13 +1067,10 @@
             mesh.quaternion.identity();
             mesh.castShadow = true;
             mesh.receiveShadow = true;
-
             const borderMat = new THREE.LineBasicMaterial({ color: 0x88ddff, transparent: true, opacity: 0 });
             const border = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), borderMat);
             mesh.add(border);
-
             const displayName = type === 'cube' ? '正方体' : '长方体';
-
             mesh.userData = {
                 isObject: true,
                 id: ++objectIdCounter,
@@ -1271,16 +1083,13 @@
                 originalColor: matColor,
                 scale: { x: 1, y: 1, z: 1 }
             };
-
             scene.add(mesh);
             customObjects.push(mesh);
             pushHistory(`放置 ${displayName}`, { obj: mesh });
             return mesh;
         }
 
-        // ============================================================
-        //  创建图片
-        // ============================================================
+        // 创建图片
         function createImage(file, pos, normal, sz) {
             return new Promise((resolve) => {
                 const loadTextureFromUrl = (url) => {
@@ -1359,7 +1168,6 @@
                         resolve(mesh);
                     });
                 };
-
                 if (typeof file === 'string') {
                     loadTextureFromUrl(file);
                 } else {
@@ -1372,12 +1180,9 @@
             });
         }
 
-        // ============================================================
-        //  创建灯光物体
-        // ============================================================
+        // 创建灯光物体
         function createLightObject(pos, normal, size = DEFAULT_LIGHT_SIZE, intensity = DEFAULT_LIGHT_INTENSITY) {
             const group = new THREE.Group();
-
             const geo = new THREE.PlaneGeometry(size, size);
             const mat = new THREE.MeshStandardMaterial({
                 color: 0xffeedd,
@@ -1392,29 +1197,24 @@
             const mesh = new THREE.Mesh(geo, mat);
             mesh.position.set(0, 0, 0);
             group.add(mesh);
-
             const pointLight = new THREE.PointLight(0xffdd88, intensity * 1.5, 8);
             pointLight.position.set(0, 0, 0.1);
             pointLight.castShadow = true;
             group.add(pointLight);
-
             const glowGeo = new THREE.SphereGeometry(0.05, 8, 8);
             const glowMat = new THREE.MeshBasicMaterial({ color: 0xffdd88, transparent: true, opacity: 0.7 });
             const glow = new THREE.Mesh(glowGeo, glowMat);
             glow.position.set(0, 0, 0.15);
             group.add(glow);
-
             const borderMat = new THREE.LineBasicMaterial({ color: 0xffaa44, transparent: true, opacity: 0 });
             const border = new THREE.LineSegments(new THREE.EdgesGeometry(geo), borderMat);
             group.add(border);
-
             const offsetPos = pos.clone();
             if (normal && normal.length() > 0.001) {
                 offsetPos.add(normal.clone().normalize().multiplyScalar(0.02));
                 group.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal.clone().normalize());
             }
             group.position.copy(offsetPos);
-
             group.userData = {
                 isLight: true,
                 id: ++lightIdCounter,
@@ -1427,16 +1227,13 @@
                 borderMat: borderMat,
                 glow: glow
             };
-
             scene.add(group);
             lightObjects.push(group);
             pushHistory('放置灯光', { obj: group });
             return group;
         }
 
-        // ============================================================
-        //  编辑模式 - 几何体
-        // ============================================================
+        // 编辑模式
         function selectObject(mesh) {
             if (selectedObject && selectedObject !== mesh) deselectObject();
             selectedObject = mesh;
@@ -1445,8 +1242,8 @@
                 mesh.userData.borderMat.opacity = 0.8;
                 mesh.userData.borderMat.color.setHex(0x88ddff);
             }
-            status.classList.add('show');
-            status.textContent = `📐 ${mesh.userData.name} 编辑中`;
+            document.getElementById('status').classList.add('show');
+            document.getElementById('status').textContent = `📐 ${mesh.userData.name} 编辑中`;
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = false;
@@ -1460,8 +1257,8 @@
             }
             selectedObject = null;
             isEditing = false;
-            status.classList.remove('show');
-            status.textContent = '✏️ 编辑中';
+            document.getElementById('status').classList.remove('show');
+            document.getElementById('status').textContent = '✏️ 编辑中';
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = true;
@@ -1489,7 +1286,7 @@
             showToast(`🎨 已染色`, 800);
         }
 
-        // --- 缩放控制手柄 ---
+        // 缩放控制手柄
         function showScaleHandles(mesh) {
             if (!mesh) return;
             const rect = renderer.domElement.getBoundingClientRect();
@@ -1497,8 +1294,7 @@
             const vec = pos.clone().project(camera);
             const x = (vec.x * 0.5 + 0.5) * rect.width;
             const y = (-vec.y * 0.5 + 0.5) * rect.height;
-            const scale = 120 / (1 + vec.z * 0.5);
-
+            const scaleHandles = document.getElementById('scaleHandles');
             scaleHandles.style.display = 'block';
             scaleHandles.style.left = (x - 30) + 'px';
             scaleHandles.style.top = (y - 30) + 'px';
@@ -1508,21 +1304,22 @@
         }
 
         function hideScaleHandles() {
+            const scaleHandles = document.getElementById('scaleHandles');
             scaleHandles.style.display = 'none';
             scaleHandles._targetMesh = null;
         }
 
-        // --- 手柄拖拽 ---
+        // 手柄拖拽
         let isScaling = false;
         let scaleAxis = '';
         let scaleStartMouse = new THREE.Vector2();
         let scaleStartValues = { x: 1, y: 1, z: 1 };
-        let scaleStartPos = new THREE.Vector3();
 
         document.querySelectorAll('#scaleHandles .handle').forEach(handle => {
             handle.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
+                const scaleHandles = document.getElementById('scaleHandles');
                 if (!scaleHandles._targetMesh) return;
                 isScaling = true;
                 scaleAxis = handle.dataset.axis;
@@ -1531,17 +1328,17 @@
                 scaleStartValues.x = mesh.scale.x;
                 scaleStartValues.y = mesh.scale.y;
                 scaleStartValues.z = mesh.scale.z;
-                scaleStartPos.copy(mesh.position);
                 document.body.style.cursor = 'pointer';
             });
         });
 
         window.addEventListener('mousemove', (e) => {
-            if (!isScaling || !scaleHandles._targetMesh) return;
+            if (!isScaling) return;
+            const scaleHandles = document.getElementById('scaleHandles');
+            if (!scaleHandles._targetMesh) return;
             const mesh = scaleHandles._targetMesh;
             const dx = (e.clientX - scaleStartMouse.x) * 0.005;
             const dy = (e.clientY - scaleStartMouse.y) * 0.005;
-
             if (scaleAxis === 'x') {
                 mesh.scale.x = Math.max(0.1, scaleStartValues.x + dx * 2);
                 showToast(`📐 宽度: ${mesh.scale.x.toFixed(2)}`, 300);
@@ -1566,9 +1363,7 @@
             }
         });
 
-        // ============================================================
-        //  图片编辑模式
-        // ============================================================
+        // 图片编辑模式
         function selectImage(mesh) {
             if (selectedImage && selectedImage !== mesh) deselectImage();
             selectedImage = mesh;
@@ -1577,8 +1372,8 @@
                 mesh.userData.bmat.opacity = 0.8;
                 mesh.userData.bmat.color.setHex(0x4a7ab5);
             }
-            status.classList.add('show');
-            status.textContent = '🖼️ 图片编辑中';
+            document.getElementById('status').classList.add('show');
+            document.getElementById('status').textContent = '🖼️ 图片编辑中';
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = false;
@@ -1592,8 +1387,8 @@
             }
             selectedImage = null;
             isImageEditing = false;
-            status.classList.remove('show');
-            status.textContent = '✏️ 编辑中';
+            document.getElementById('status').classList.remove('show');
+            document.getElementById('status').textContent = '✏️ 编辑中';
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = true;
@@ -1623,25 +1418,11 @@
             showToast('🗑️ 所有图片已清空');
         }
 
-        function updateImageSize(mesh, s) {
-            const asp = mesh.userData.asp || 1;
-            const g = new THREE.PlaneGeometry(s * asp, s);
-            mesh.geometry.dispose();
-            mesh.geometry = g;
-            const b = mesh.userData.border;
-            if (b) {
-                b.geometry.dispose();
-                b.geometry = new THREE.EdgesGeometry(g);
-            }
-            mesh.userData.sz = s;
-        }
-
-        // --- 图片控制手柄 ---
+        // 图片控制手柄
         let isImageResizing = false;
         let imageResizeCorner = '';
         let imageResizeStartPos = new THREE.Vector2();
         let imageResizeStartSize = 1.0;
-        let imageResizeStartAspect = 1.0;
 
         function showImageResizeHandles(mesh) {
             if (!mesh) return;
@@ -1649,27 +1430,25 @@
             const pos = mesh.position.clone();
             const size = mesh.userData.sz || 1.0;
             const asp = mesh.userData.asp || 1.0;
-
             const vec = pos.clone().project(camera);
             const x = (vec.x * 0.5 + 0.5) * rect.width;
             const y = (-vec.y * 0.5 + 0.5) * rect.height;
             const scale = 100 / (1 + vec.z * 0.5);
-
             const w = size * asp * scale * 0.5;
             const h = size * scale * 0.5;
-
+            const resizeHandles = document.getElementById('resizeHandles');
             resizeHandles.style.display = 'block';
             resizeHandles.style.left = (x - w - 7) + 'px';
             resizeHandles.style.top = (y - h - 7) + 'px';
             resizeHandles.style.width = (w * 2 + 14) + 'px';
             resizeHandles.style.height = (h * 2 + 14) + 'px';
-
             resizeHandles._targetMesh = mesh;
             resizeHandles._size = size;
             resizeHandles._asp = asp;
         }
 
         function hideImageResizeHandles() {
+            const resizeHandles = document.getElementById('resizeHandles');
             resizeHandles.style.display = 'none';
             resizeHandles._targetMesh = null;
         }
@@ -1678,29 +1457,28 @@
             handle.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
+                const resizeHandles = document.getElementById('resizeHandles');
                 if (!resizeHandles._targetMesh) return;
                 isImageResizing = true;
                 imageResizeCorner = handle.dataset.corner;
                 imageResizeStartPos.set(e.clientX, e.clientY);
                 imageResizeStartSize = resizeHandles._size || 1.0;
-                imageResizeStartAspect = resizeHandles._asp || 1.0;
                 document.body.style.cursor = 'nwse-resize';
             });
         });
 
         window.addEventListener('mousemove', (e) => {
-            if (!isImageResizing || !resizeHandles._targetMesh) return;
+            if (!isImageResizing) return;
+            const resizeHandles = document.getElementById('resizeHandles');
+            if (!resizeHandles._targetMesh) return;
             const mesh = resizeHandles._targetMesh;
             const dx = (e.clientX - imageResizeStartPos.x) * 0.01;
-            const dy = (e.clientY - imageResizeStartPos.y) * 0.01;
-
             let newSize = imageResizeStartSize;
             if (imageResizeCorner === 'br' || imageResizeCorner === 'tr') {
                 newSize = Math.max(0.2, imageResizeStartSize + dx * 0.3);
             } else if (imageResizeCorner === 'bl' || imageResizeCorner === 'tl') {
                 newSize = Math.max(0.2, imageResizeStartSize - dx * 0.3);
             }
-
             const asp = mesh.userData.asp || 1.0;
             const geo = new THREE.PlaneGeometry(newSize * asp, newSize);
             mesh.geometry.dispose();
@@ -1711,7 +1489,6 @@
                 border.geometry = new THREE.EdgesGeometry(geo);
             }
             mesh.userData.sz = newSize;
-
             resizeHandles._size = newSize;
             showImageResizeHandles(mesh);
         });
@@ -1720,15 +1497,10 @@
             if (isImageResizing) {
                 isImageResizing = false;
                 document.body.style.cursor = 'default';
-                if (resizeHandles._targetMesh) {
-                    showImageResizeHandles(resizeHandles._targetMesh);
-                }
             }
         });
 
-        // ============================================================
-        //  灯光编辑
-        // ============================================================
+        // 灯光编辑
         function selectLight(group) {
             if (selectedLight && selectedLight !== group) deselectLight();
             selectedLight = group;
@@ -1737,8 +1509,8 @@
                 group.userData.borderMat.opacity = 0.8;
                 group.userData.borderMat.color.setHex(0xffaa44);
             }
-            status.classList.add('show');
-            status.textContent = '💡 灯光编辑中';
+            document.getElementById('status').classList.add('show');
+            document.getElementById('status').textContent = '💡 灯光编辑中';
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = false;
@@ -1751,8 +1523,8 @@
             }
             selectedLight = null;
             isLightEditing = false;
-            status.classList.remove('show');
-            status.textContent = '✏️ 编辑中';
+            document.getElementById('status').classList.remove('show');
+            document.getElementById('status').textContent = '✏️ 编辑中';
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.enableRotate = true;
@@ -1771,36 +1543,6 @@
             showToast('💡 灯光已删除');
         }
 
-        function updateLightSize(group, s) {
-            const newSize = Math.max(0.1, s);
-            const mesh = group.userData.mesh;
-            const pointLight = group.userData.pointLight;
-            const border = group.userData.border;
-
-            const geo = new THREE.PlaneGeometry(newSize, newSize);
-            mesh.geometry.dispose();
-            mesh.geometry = geo;
-            if (border) {
-                border.geometry.dispose();
-                border.geometry = new THREE.EdgesGeometry(geo);
-            }
-            if (pointLight) {
-                pointLight.distance = newSize * 6;
-            }
-            group.userData.size = newSize;
-        }
-
-        function updateLightIntensity(group, intensity) {
-            const newIntensity = Math.max(0.1, intensity);
-            const mesh = group.userData.mesh;
-            const pointLight = group.userData.pointLight;
-            mesh.material.emissiveIntensity = newIntensity;
-            if (pointLight) {
-                pointLight.intensity = newIntensity * 1.5;
-            }
-            group.userData.intensity = newIntensity;
-        }
-
         function clearAllLights() {
             if (!lightObjects.length || !confirm('确定删除所有灯光吗？')) return;
             deselectLight();
@@ -1816,9 +1558,7 @@
             showToast('🗑️ 所有灯光已清空');
         }
 
-        // ============================================================
-        //  射线检测
-        // ============================================================
+        // 射线检测
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
@@ -1829,7 +1569,7 @@
             const objs = [];
             scene.traverse(c => {
                 if (c.isMesh && (includeObjects || !c.userData?.isObject && !c.userData?.isLight && !c.userData
-                    ?.isImage)) objs.push(c);
+                        ?.isImage)) objs.push(c);
             });
             lightObjects.forEach(group => {
                 group.children.forEach(child => {
@@ -1877,27 +1617,20 @@
             return null;
         }
 
-        // ============================================================
-        //  鼠标事件
-        // ============================================================
-
+        // 鼠标事件
         renderer.domElement.addEventListener('click', (e) => {
-            if (coordToast.classList.contains('show')) return;
+            if (document.getElementById('toastCoord').classList.contains('show')) return;
             if (isDraggingToPlace) return;
-
             const hit = getHit(e, true);
             if (!hit) return;
-
             const waypoint = findWaypoint(hit.object);
             if (waypoint) {
                 moveToWaypoint(waypoint.position);
                 return;
             }
-
             const obj = findObject(hit.object);
             const light = findLight(hit.object);
             const img = findImage(hit.object);
-
             if (obj && isEditing && obj === selectedObject) {
                 return;
             }
@@ -1907,17 +1640,14 @@
             if (img && isImageEditing && img === selectedImage) {
                 return;
             }
-
             deselectObject();
             deselectLight();
             deselectImage();
         });
 
-        // --- 双击 ---
         renderer.domElement.addEventListener('dblclick', (e) => {
-            if (coordToast.classList.contains('show')) return;
+            if (document.getElementById('toastCoord').classList.contains('show')) return;
             if (isDraggingToPlace) return;
-
             const hit = getHit(e, true);
             if (!hit) {
                 deselectObject();
@@ -1927,7 +1657,6 @@
                 hideImageResizeHandles();
                 return;
             }
-
             const obj = findObject(hit.object);
             if (obj) {
                 deselectLight();
@@ -1935,7 +1664,6 @@
                 selectObject(obj);
                 return;
             }
-
             const img = findImage(hit.object);
             if (img) {
                 deselectObject();
@@ -1943,7 +1671,6 @@
                 selectImage(img);
                 return;
             }
-
             const light = findLight(hit.object);
             if (light) {
                 deselectObject();
@@ -1951,7 +1678,6 @@
                 selectLight(light);
                 return;
             }
-
             deselectObject();
             deselectLight();
             deselectImage();
@@ -1959,76 +1685,66 @@
             hideImageResizeHandles();
         });
 
-        // ============================================================
-        //  ✅ 右键菜单 - 包含"上传图片"和"放置灯光"
-        // ============================================================
+        // 右键菜单
         renderer.domElement.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            if (coordToast.classList.contains('show')) return;
+            if (document.getElementById('toastCoord').classList.contains('show')) return;
             if (isDraggingToPlace) return;
-
             const hit = getHit(e, true);
-
-            // 检查几何体
+            const ctx = document.getElementById('contextMenu');
             const obj = findObject(hit?.object);
             if (obj) {
                 ctx.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
                 ctx.style.top = Math.min(e.clientY, window.innerHeight - 240) + 'px';
-                $('menuUpload').style.display = 'none';
-                $('menuLight').style.display = 'none';
-                $('menuVertical').style.display = 'none';
-                $('menuColorBlack').style.display = 'flex';
-                $('menuColorWhite').style.display = 'flex';
-                $('menuColorBrown').style.display = 'flex';
-                $('menuDelete').style.display = 'flex';
-                $('menuDelete').textContent = '🗑️ 删除物体';
+                document.getElementById('menuUpload').style.display = 'none';
+                document.getElementById('menuLight').style.display = 'none';
+                document.getElementById('menuVertical').style.display = 'none';
+                document.getElementById('menuColorBlack').style.display = 'flex';
+                document.getElementById('menuColorWhite').style.display = 'flex';
+                document.getElementById('menuColorBrown').style.display = 'flex';
+                document.getElementById('menuDelete').style.display = 'flex';
+                document.getElementById('menuDelete').textContent = '🗑️ 删除物体';
                 ctx.style.display = 'block';
                 ctx._target = obj;
                 ctx._targetType = 'object';
                 pendingPos = null;
                 return;
             }
-
-            // 检查图片
             const img = findImage(hit?.object);
             if (img) {
                 ctx.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
                 ctx.style.top = Math.min(e.clientY, window.innerHeight - 240) + 'px';
-                $('menuUpload').style.display = 'none';
-                $('menuLight').style.display = 'none';
-                $('menuVertical').style.display = 'flex';
-                $('menuColorBlack').style.display = 'none';
-                $('menuColorWhite').style.display = 'none';
-                $('menuColorBrown').style.display = 'none';
-                $('menuDelete').style.display = 'flex';
-                $('menuDelete').textContent = '🗑️ 删除图片';
+                document.getElementById('menuUpload').style.display = 'none';
+                document.getElementById('menuLight').style.display = 'none';
+                document.getElementById('menuVertical').style.display = 'flex';
+                document.getElementById('menuColorBlack').style.display = 'none';
+                document.getElementById('menuColorWhite').style.display = 'none';
+                document.getElementById('menuColorBrown').style.display = 'none';
+                document.getElementById('menuDelete').style.display = 'flex';
+                document.getElementById('menuDelete').textContent = '🗑️ 删除图片';
                 ctx.style.display = 'block';
                 ctx._target = img;
                 ctx._targetType = 'image';
                 pendingPos = null;
                 return;
             }
-
-            // 检查灯光
             const light = findLight(hit?.object);
             if (light) {
                 ctx.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
                 ctx.style.top = Math.min(e.clientY, window.innerHeight - 240) + 'px';
-                $('menuUpload').style.display = 'none';
-                $('menuLight').style.display = 'none';
-                $('menuColorBlack').style.display = 'none';
-                $('menuColorWhite').style.display = 'none';
-                $('menuColorBrown').style.display = 'none';
-                $('menuDelete').style.display = 'flex';
-                $('menuDelete').textContent = '🗑️ 删除灯光';
+                document.getElementById('menuUpload').style.display = 'none';
+                document.getElementById('menuLight').style.display = 'none';
+                document.getElementById('menuColorBlack').style.display = 'none';
+                document.getElementById('menuColorWhite').style.display = 'none';
+                document.getElementById('menuColorBrown').style.display = 'none';
+                document.getElementById('menuDelete').style.display = 'flex';
+                document.getElementById('menuDelete').textContent = '🗑️ 删除灯光';
                 ctx.style.display = 'block';
                 ctx._target = light;
                 ctx._targetType = 'light';
                 pendingPos = null;
                 return;
             }
-
-            // ✅ 点击墙面 → 显示"上传图片"和"放置灯光"，仅垂直墙面可放灯
             if (hit) {
                 const pos = hit.point.clone();
                 const normal = hit.face.normal.clone();
@@ -2037,12 +1753,12 @@
                 pendingPos = { point: pos, normal: normal };
                 ctx.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
                 ctx.style.top = Math.min(e.clientY, window.innerHeight - 240) + 'px';
-                $('menuUpload').style.display = 'flex';
-                $('menuLight').style.display = isWallSurface ? 'flex' : 'none';
-                $('menuColorBlack').style.display = 'none';
-                $('menuColorWhite').style.display = 'none';
-                $('menuColorBrown').style.display = 'none';
-                $('menuDelete').style.display = 'none';
+                document.getElementById('menuUpload').style.display = 'flex';
+                document.getElementById('menuLight').style.display = isWallSurface ? 'flex' : 'none';
+                document.getElementById('menuColorBlack').style.display = 'none';
+                document.getElementById('menuColorWhite').style.display = 'none';
+                document.getElementById('menuColorBrown').style.display = 'none';
+                document.getElementById('menuDelete').style.display = 'none';
                 ctx.style.display = 'block';
                 ctx._target = null;
                 ctx._targetType = null;
@@ -2052,20 +1768,21 @@
         });
 
         document.addEventListener('click', (e) => {
+            const ctx = document.getElementById('contextMenu');
             if (!ctx.contains(e.target)) {
                 ctx.style.display = 'none';
             }
         });
 
-        // --- 菜单按钮 ---
-        $('menuUpload').addEventListener('click', () => {
-            ctx.style.display = 'none';
+        // 菜单按钮
+        document.getElementById('menuUpload').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
             if (!pendingPos) { showToast('⚠️ 请右键墙面'); return; }
-            fileInput.click();
+            document.getElementById('fileInput').click();
         });
 
-        $('menuLight').addEventListener('click', () => {
-            ctx.style.display = 'none';
+        document.getElementById('menuLight').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
             if (!pendingPos) { showToast('⚠️ 请右键墙面'); return; }
             const pos = pendingPos.point.clone();
             const normal = pendingPos.normal.clone();
@@ -2074,40 +1791,40 @@
             pendingPos = null;
         });
 
-        $('menuColorBlack').addEventListener('click', () => {
-            ctx.style.display = 'none';
-            const target = ctx._target;
+        document.getElementById('menuColorBlack').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
+            const target = document.getElementById('contextMenu')._target;
             if (target && target.userData.isObject) {
                 recolorObject(target, COLORS.black);
             }
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        $('menuColorWhite').addEventListener('click', () => {
-            ctx.style.display = 'none';
-            const target = ctx._target;
+        document.getElementById('menuColorWhite').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
+            const target = document.getElementById('contextMenu')._target;
             if (target && target.userData.isObject) {
                 recolorObject(target, COLORS.white);
             }
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        $('menuColorBrown').addEventListener('click', () => {
-            ctx.style.display = 'none';
-            const target = ctx._target;
+        document.getElementById('menuColorBrown').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
+            const target = document.getElementById('contextMenu')._target;
             if (target && target.userData.isObject) {
                 recolorObject(target, COLORS.brown);
             }
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        $('menuDelete').addEventListener('click', () => {
-            ctx.style.display = 'none';
-            const target = ctx._target;
-            const type = ctx._targetType;
+        document.getElementById('menuDelete').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
+            const target = document.getElementById('contextMenu')._target;
+            const type = document.getElementById('contextMenu')._targetType;
             if (target) {
                 if (type === 'object') {
                     removeObject(target);
@@ -2122,35 +1839,40 @@
                     deselectLight();
                 }
             }
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        $('menuVertical').addEventListener('click', () => {
-            ctx.style.display = 'none';
-            const target = ctx._target;
+        document.getElementById('menuVertical').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
+            const target = document.getElementById('contextMenu')._target;
             if (target && target.userData.isImage) {
-                orientImageVertical(target);
+                const dir = new THREE.Vector3();
+                camera.getWorldDirection(dir);
+                dir.y = 0;
+                if (dir.lengthSq() < 0.0001) dir.set(0, 0, 1);
+                dir.normalize();
+                target.userData.normal = dir.clone();
+                target.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir);
+                const height = target.userData.sz || 1.0;
+                target.position.y = height / 2 + 0.02;
                 showToast('🖼️ 图片已垂直于地面', 1200);
             }
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        $('menuCancel').addEventListener('click', () => {
-            ctx.style.display = 'none';
+        document.getElementById('menuCancel').addEventListener('click', () => {
+            document.getElementById('contextMenu').style.display = 'none';
             pendingPos = null;
-            ctx._target = null;
-            ctx._targetType = null;
+            document.getElementById('contextMenu')._target = null;
+            document.getElementById('contextMenu')._targetType = null;
         });
 
-        // ============================================================
-        //  文件上传（图片）
-        // ============================================================
-        fileInput.addEventListener('change', async (e) => {
+        // 文件上传
+        document.getElementById('fileInput').addEventListener('change', async (e) => {
             const files = e.target.files;
-            if (!files.length) { fileInput.value = ''; return; }
-
+            if (!files.length) { document.getElementById('fileInput').value = ''; return; }
             let pos, normal;
             if (pendingPos) {
                 pos = pendingPos.point.clone();
@@ -2162,7 +1884,6 @@
                 pos = camera.position.clone().add(dir.multiplyScalar(3));
                 normal = new THREE.Vector3(0, 0, -1);
             }
-
             let count = 0;
             for (const f of files) {
                 if (!f.type.startsWith('image/')) continue;
@@ -2172,15 +1893,13 @@
                     pos.x += 0.3;
                 }
             }
-            fileInput.value = '';
+            document.getElementById('fileInput').value = '';
             showToast(count ? `✅ 上传 ${count} 张图片` : '❌ 上传失败');
             deselectImage();
             hideImageResizeHandles();
         });
 
-        // ============================================================
-        //  拖拽放置 - 几何体
-        // ============================================================
+        // 拖拽放置
         let isDraggingToPlace = false;
         let dragType = 'cube';
         let dragObject = null;
@@ -2190,7 +1909,6 @@
             if (isDraggingToPlace) return;
             isDraggingToPlace = true;
             dragType = type;
-
             let geometry;
             const s = 0.6;
             if (type === 'cube') {
@@ -2198,7 +1916,6 @@
             } else {
                 geometry = new THREE.BoxGeometry(s * 1.5, s * 0.6, s * 0.8);
             }
-
             const mat = new THREE.MeshStandardMaterial({
                 color: 0x888888,
                 transparent: true,
@@ -2208,12 +1925,10 @@
             dragObject = new THREE.Mesh(geometry, mat);
             dragObject.position.copy(camera.position).add(new THREE.Vector3(0, 0, -2));
             scene.add(dragObject);
-
             const btnMap = { cube: 'btnCube', box: 'btnBox' };
             document.querySelectorAll('#leftToolbar .tool-btn').forEach(b => b.classList.remove('drag-mode'));
-            const activeBtn = $(btnMap[type]);
+            const activeBtn = document.getElementById(btnMap[type]);
             if (activeBtn) activeBtn.classList.add('drag-mode');
-
             const name = type === 'cube' ? '正方体' : '长方体';
             showToast(`📦 拖拽 ${name} 到场景中放置，点击放置`, 2000);
             controls.enableRotate = false;
@@ -2223,39 +1938,31 @@
 
         function updateDragPosition(event) {
             if (!isDraggingToPlace || !dragObject) return;
-
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
-
             const objs = [];
             scene.traverse(c => {
                 if (c.isMesh && !c.userData?.isObject && !c.userData?.isLight && !c.userData?.isImage) objs
                     .push(c);
             });
             const hits = raycaster.intersectObjects(objs, true);
-
             if (hits.length > 0) {
                 const hit = hits[0];
                 const pos = hit.point.clone();
                 const normal = hit.face.normal.clone();
                 normal.transformDirection(hit.object.matrixWorld);
-
                 const offset = normal.clone().multiplyScalar(0.05);
                 pos.add(offset);
-
                 pos.x = Math.round(pos.x / 0.2) * 0.2;
                 pos.y = Math.round(pos.y / 0.2) * 0.2;
                 pos.z = Math.round(pos.z / 0.2) * 0.2;
-
                 if (normal.y > 0.8) {
                     pos.y += 0.3;
                 }
-
                 dragObject.position.copy(pos);
                 dragNormal.copy(normal);
                 dragObject.quaternion.identity();
-
                 dragObject.material.opacity = 0.8;
                 dragObject.material.color.setHex(0x44ff44);
             } else {
@@ -2274,20 +1981,16 @@
 
         function endDragging() {
             if (!isDraggingToPlace || !dragObject) return;
-
             const pos = dragObject.position.clone();
             const normal = dragNormal.clone();
-
             scene.remove(dragObject);
             const obj = createGeometry(dragType, pos, normal, COLORS.default);
-
             isDraggingToPlace = false;
             dragObject = null;
             document.querySelectorAll('#leftToolbar .tool-btn').forEach(b => b.classList.remove('drag-mode'));
             controls.enableRotate = true;
             controls.enableZoom = false;
             renderer.domElement.style.cursor = 'default';
-
             showToast(`✅ ${obj.userData.name} 已放置`, 1000);
         }
 
@@ -2304,16 +2007,14 @@
             showToast('❌ 已取消放置', 1000);
         }
 
-        // --- 按钮 ---
-        $('btnCube').addEventListener('click', () => startDragging('cube'));
-        $('btnBox').addEventListener('click', () => startDragging('box'));
+        document.getElementById('btnCube').addEventListener('click', () => startDragging('cube'));
+        document.getElementById('btnBox').addEventListener('click', () => startDragging('box'));
 
-        $('btnImportModel').addEventListener('click', () => {
+        document.getElementById('btnImportModel').addEventListener('click', () => {
             if (!pendingPos) { showToast('⚠️ 请先右键墙面或地面选择位置', 1500); return; }
-            modelInput.click();
+            document.getElementById('modelInput').click();
         });
 
-        // --- 鼠标移动更新拖拽 ---
         renderer.domElement.addEventListener('mousemove', (e) => {
             if (isDraggingToPlace) {
                 updateDragPosition(e);
@@ -2336,16 +2037,15 @@
             }
         });
 
+        // 键盘控制
+        const keys = { w: false, a: false, s: false, d: false };
+
         document.addEventListener('keydown', (e) => {
             const key = e.key.toLowerCase();
-
-            // WASD 移动
             if ('wasd'.includes(key)) {
                 keys[key] = true;
                 e.preventDefault();
             }
-
-            // E/Q 升降视角
             if (e.key === 'e' || e.key === 'E') {
                 adjustCameraHeight(0.2);
                 e.preventDefault();
@@ -2354,8 +2054,6 @@
                 adjustCameraHeight(-0.2);
                 e.preventDefault();
             }
-
-            // ESC 取消拖拽
             if (e.key === 'Escape' && isDraggingToPlace) {
                 cancelDragging();
                 e.preventDefault();
@@ -2370,14 +2068,12 @@
             }
         });
 
-        // --- 导入模型 ---
-        modelInput.addEventListener('change', async (e) => {
+        // 导入模型
+        document.getElementById('modelInput').addEventListener('change', async (e) => {
             const files = e.target.files;
-            if (!files.length) { modelInput.value = ''; return; }
-
+            if (!files.length) { document.getElementById('modelInput').value = ''; return; }
             const file = files[0];
             const ext = file.name.split('.').pop().toLowerCase();
-
             let pos, normal;
             if (pendingPos) {
                 pos = pendingPos.point.clone();
@@ -2389,11 +2085,9 @@
                 pos = camera.position.clone().add(dir.multiplyScalar(3));
                 normal = new THREE.Vector3(0, 1, 0);
             }
-
             try {
                 let model;
                 const url = URL.createObjectURL(file);
-
                 if (ext === 'glb' || ext === 'gltf') {
                     const gltfLoader = new GLTFLoader();
                     model = await new Promise((resolve, reject) => {
@@ -2411,17 +2105,15 @@
                     });
                 } else {
                     showToast('❌ 不支持的格式: ' + ext, 2000);
-                    modelInput.value = '';
+                    document.getElementById('modelInput').value = '';
                     return;
                 }
-
                 model.position.copy(pos);
                 if (normal && normal.length() > 0.001 && Math.abs(normal.y) < 0.9) {
                     const up = new THREE.Vector3(0, 1, 0);
                     const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
                     model.quaternion.copy(quat);
                 }
-
                 model.traverse((child) => {
                     if (child.isMesh) {
                         const borderMat = new THREE.LineBasicMaterial({
@@ -2437,7 +2129,6 @@
                         child.userData.borderMat = borderMat;
                     }
                 });
-
                 model.userData = {
                     isObject: true,
                     id: ++objectIdCounter,
@@ -2447,40 +2138,53 @@
                     originalColor: 0x888888,
                     isImported: true
                 };
-
                 scene.add(model);
                 customObjects.push(model);
                 pushHistory(`导入 ${file.name}`, { obj: model });
                 showToast(`✅ 已导入: ${file.name}`, 2000);
-
             } catch (err) {
                 console.error('导入失败:', err);
                 showToast('❌ 导入失败: ' + err.message, 2000);
             }
-
-            modelInput.value = '';
+            document.getElementById('modelInput').value = '';
         });
 
-        // ============================================================
-        //  滚轮控制
-        // ============================================================
+        // 滚轮控制
         renderer.domElement.addEventListener('wheel', (e) => {
             if (isLightEditing && selectedLight) {
                 e.preventDefault();
                 if (e.ctrlKey) {
                     const d = e.deltaY > 0 ? -0.2 : 0.2;
                     const newIntensity = Math.max(0.1, selectedLight.userData.intensity + d);
-                    updateLightIntensity(selectedLight, newIntensity);
+                    const mesh = selectedLight.userData.mesh;
+                    const pointLight = selectedLight.userData.pointLight;
+                    mesh.material.emissiveIntensity = newIntensity;
+                    if (pointLight) {
+                        pointLight.intensity = newIntensity * 1.5;
+                    }
+                    selectedLight.userData.intensity = newIntensity;
                     showToast(`💡 亮度: ${newIntensity.toFixed(1)}`, 500);
                 } else {
                     const d = e.deltaY > 0 ? -0.1 : 0.1;
                     const newSize = Math.max(0.1, selectedLight.userData.size + d);
-                    updateLightSize(selectedLight, newSize);
+                    const mesh = selectedLight.userData.mesh;
+                    const pointLight = selectedLight.userData.pointLight;
+                    const border = selectedLight.userData.border;
+                    const geo = new THREE.PlaneGeometry(newSize, newSize);
+                    mesh.geometry.dispose();
+                    mesh.geometry = geo;
+                    if (border) {
+                        border.geometry.dispose();
+                        border.geometry = new THREE.EdgesGeometry(geo);
+                    }
+                    if (pointLight) {
+                        pointLight.distance = newSize * 6;
+                    }
+                    selectedLight.userData.size = newSize;
                     showToast(`📏 大小: ${newSize.toFixed(1)}`, 500);
                 }
                 return;
             }
-
             if (isEditing && selectedObject) {
                 e.preventDefault();
                 const d = e.deltaY > 0 ? 0.05 : -0.05;
@@ -2490,88 +2194,53 @@
             }
         }, { passive: false });
 
-        // ============================================================
-        //  拖拽移动
-        // ============================================================
+        // 拖拽移动
         let isDragging = false;
-        let isResizingLight = false;
         let dragStart = new THREE.Vector2();
         let dragOrigin = new THREE.Vector3();
         let dragPlane = new THREE.Plane();
         let dragIntersect = new THREE.Vector3();
         let dragTarget = null;
         let dragTargetType = '';
-        let dragOriginSize = 0;
-        let dragOriginIntensity = 0;
 
         renderer.domElement.addEventListener('mousedown', (e) => {
             if (e.button !== 0) return;
-            if (ctx.style.display === 'block') return;
+            if (document.getElementById('contextMenu').style.display === 'block') return;
             if (isScaling) return;
             if (isImageResizing) return;
             if (isDraggingToPlace) return;
-
             const hit = getHit(e, true);
             if (!hit) return;
-
             const obj = findObject(hit.object);
             const light = findLight(hit.object);
             const img = findImage(hit.object);
-
             if (obj && isEditing && obj === selectedObject) {
                 dragTarget = obj;
                 dragTargetType = 'object';
-                isResizingLight = false;
             } else if (light && isLightEditing && light === selectedLight) {
                 dragTarget = light;
                 dragTargetType = 'light';
-                isResizingLight = e.ctrlKey;
-                if (isResizingLight) {
-                    dragOriginSize = light.userData.size;
-                    dragOriginIntensity = light.userData.intensity;
-                }
             } else if (img && isImageEditing && img === selectedImage) {
                 dragTarget = img;
                 dragTargetType = 'image';
-                isResizingLight = false;
             } else {
                 return;
             }
-
             isDragging = true;
             dragStart.set(e.clientX, e.clientY);
             dragOrigin.copy(dragTarget.position);
-            if (!isResizingLight) {
-                if (dragTargetType === 'light') {
-                    const normal = dragTarget.userData.normal || new THREE.Vector3(0, 1, 0);
-                    dragPlane.setFromNormalAndCoplanarPoint(normal, dragTarget.position);
-                } else {
-                    const dir = new THREE.Vector3();
-                    camera.getWorldDirection(dir);
-                    dragPlane.setFromNormalAndCoplanarPoint(dir, dragTarget.position);
-                }
-                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-                raycaster.setFromCamera(mouse, camera);
-                raycaster.ray.intersectPlane(dragPlane, dragIntersect);
-                renderer.domElement.style.cursor = 'grabbing';
-            } else {
-                renderer.domElement.style.cursor = 'ns-resize';
-            }
+            const dir = new THREE.Vector3();
+            camera.getWorldDirection(dir);
+            dragPlane.setFromNormalAndCoplanarPoint(dir, dragTarget.position);
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            raycaster.ray.intersectPlane(dragPlane, dragIntersect);
+            renderer.domElement.style.cursor = 'grabbing';
         });
 
         window.addEventListener('mousemove', (e) => {
             if (!isDragging || !dragTarget) return;
-            if (dragTargetType === 'light' && isResizingLight) {
-                const dy = dragStart.y - e.clientY;
-                const delta = dy * 0.01;
-                const newSize = Math.max(0.1, dragOriginSize + delta);
-                const newIntensity = Math.max(0.1, dragOriginIntensity + delta * 0.8);
-                updateLightSize(dragTarget, newSize);
-                updateLightIntensity(dragTarget, newIntensity);
-                showToast(`📏 大小 ${newSize.toFixed(2)} / 亮度 ${newIntensity.toFixed(1)}`, 200);
-                return;
-            }
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
@@ -2594,21 +2263,20 @@
         window.addEventListener('mouseup', () => {
             if (isDragging) {
                 isDragging = false;
-                isResizingLight = false;
                 dragTarget = null;
                 dragTargetType = '';
                 renderer.domElement.style.cursor = 'default';
             }
         });
 
-        // ============================================================
-        //  动线点系统 - 修复视角问题
-        // ============================================================
-        function createWaypointMarker(pos, label = '') {
+        // 动线点系统
+        function createWaypointMarker(pos) {
             const group = new THREE.Group();
             const ringGeo = new THREE.RingGeometry(0.25, 0.35, 32);
             const ringMat = new THREE.MeshBasicMaterial({
-                color: 0x88ddff, side: THREE.DoubleSide, transparent: true,
+                color: 0x88ddff,
+                side: THREE.DoubleSide,
+                transparent: true,
                 opacity: 0.6
             });
             const ring = new THREE.Mesh(ringGeo, ringMat);
@@ -2627,7 +2295,7 @@
             pillar.position.y = 0.15;
             group.add(pillar);
             group.position.copy(pos);
-            group.userData = { isWaypoint: true, id: ++waypointId, label: label };
+            group.userData = { isWaypoint: true, id: ++waypointId };
             scene.add(group);
             waypointMarkers.push(group);
             return group;
@@ -2637,7 +2305,7 @@
             if (!modelLoaded) { showToast('⏳ 请等待模型加载完成'); return; }
             const pos = camera.position.clone();
             pos.y = 0;
-            createWaypointMarker(pos, `点${waypointId}`);
+            createWaypointMarker(pos);
             waypoints.push(pos);
             showToast(`📍 动线点 #${waypointId} 已添加`, 2000);
             return pos;
@@ -2672,10 +2340,8 @@
             if (!modelLoaded) { showToast('⏳ 请等待模型加载完成'); return; }
             const endPos = targetPos.clone();
             endPos.y = camera.position.y;
-
             const offset = new THREE.Vector3().copy(controls.target).sub(camera.position);
             const endTarget = endPos.clone().add(offset);
-
             moveStart.copy(camera.position);
             moveEnd.copy(endPos);
             moveTargetStart.copy(controls.target);
@@ -2699,9 +2365,6 @@
             controls.target.lerpVectors(moveTargetStart, moveTargetEnd, t);
         }
 
-        // ============================================================
-        //  视角高度控制 (E/Q)
-        // ============================================================
         function adjustCameraHeight(delta) {
             const newHeight = Math.max(0.3, Math.min(8, camera.position.y + delta));
             const diff = newHeight - camera.position.y;
@@ -2712,9 +2375,7 @@
             showToast(`👁️ 视角高度: ${newHeight.toFixed(2)}`, 500);
         }
 
-        // ============================================================
-        //  撤销系统
-        // ============================================================
+        // 撤销系统
         const UNDO_LIMIT = 30;
         const history = [];
         let historyIndex = -1;
@@ -2770,14 +2431,14 @@
         }
 
         function updateUndoButton() {
-            const btn = $('btnUndo');
+            const btn = document.getElementById('btnUndo');
             if (btn) {
                 btn.style.opacity = historyIndex <= 0 ? '0.4' : '1';
                 btn.title = historyIndex <= 0 ? '没有可撤销的操作' : `撤销 (${historyIndex} 步)`;
             }
         }
 
-        // --- 保存功能 ---
+        // 保存功能
         function blobToDataURL(blob) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -2834,7 +2495,6 @@
                         position: wp.position.toArray()
                     }))
                 };
-
                 const stateJson = JSON.stringify(state, null, 2);
                 const blob = new Blob([stateJson], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
@@ -2844,7 +2504,6 @@
                 a.style.display = 'none';
                 a.target = '_blank';
                 document.body.appendChild(a);
-
                 let downloadSucceeded = true;
                 try {
                     a.click();
@@ -2853,12 +2512,10 @@
                     console.warn('下载点击失败，尝试打开新窗口:', clickErr);
                     window.open(url, '_blank');
                 }
-
                 setTimeout(() => {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
                 }, 100);
-
                 if (downloadSucceeded) {
                     showToast('💾 已保存并下载文件', 1000);
                 } else {
@@ -2874,7 +2531,6 @@
             deselectObject();
             deselectLight();
             deselectImage();
-
             customObjects.forEach(obj => {
                 scene.remove(obj);
                 if (obj.geometry) obj.geometry.dispose();
@@ -2882,7 +2538,6 @@
             });
             customObjects.length = 0;
             objectIdCounter = 0;
-
             images.forEach(img => {
                 scene.remove(img);
                 if (img.material) img.material.dispose();
@@ -2891,7 +2546,6 @@
             });
             images.length = 0;
             imageIdCounter = 0;
-
             lightObjects.forEach(group => {
                 scene.remove(group);
                 group.children.forEach(child => {
@@ -2902,7 +2556,6 @@
             });
             lightObjects.length = 0;
             lightIdCounter = 0;
-
             waypointMarkers.forEach(m => {
                 scene.remove(m);
                 m.children.forEach(c => {
@@ -2913,7 +2566,6 @@
             waypointMarkers.length = 0;
             waypoints.length = 0;
             waypointId = 0;
-
             history.length = 0;
             historyIndex = -1;
             updateUndoButton();
@@ -2923,7 +2575,6 @@
             if (!data) return;
             suppressHistory = true;
             clearCurrentLayout();
-
             if (data.objects) {
                 data.objects.forEach(item => {
                     const pos = new THREE.Vector3(...item.position);
@@ -2940,7 +2591,6 @@
                     }
                 });
             }
-
             if (data.images) {
                 data.images.forEach(item => {
                     const pos = new THREE.Vector3(...item.position);
@@ -2949,7 +2599,6 @@
                     createImage(url, pos, normal, item.size || 1.0);
                 });
             }
-
             if (data.lights) {
                 data.lights.forEach(item => {
                     const pos = new THREE.Vector3(...item.position);
@@ -2960,7 +2609,6 @@
                     }
                 });
             }
-
             if (data.waypoints) {
                 data.waypoints.forEach(item => {
                     const pos = new THREE.Vector3(...item.position);
@@ -2983,13 +2631,10 @@
             }
         }
 
-        // --- 绑定按钮 ---
-        $('btnUndo').addEventListener('click', undo);
-        $('btnSave').addEventListener('click', saveState);
+        // 按钮绑定
+        document.getElementById('btnUndo').addEventListener('click', undo);
+        document.getElementById('btnSave').addEventListener('click', saveState);
 
-        // ============================================================
-        //  📤 导出 / 📥 导入
-        // ============================================================
         async function exportLayout() {
             try {
                 const data = {
@@ -3022,7 +2667,6 @@
                         position: wp.position.toArray()
                     }))
                 };
-
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3059,12 +2703,11 @@
             reader.readAsText(file);
         }
 
-        // ============================================================
-        //  按钮绑定
-        // ============================================================
-        $('btnReset').addEventListener('click', () => {
-            if (isOverviewMode) setBrowseMode();
-            else {
+        // 按钮绑定
+        document.getElementById('btnReset').addEventListener('click', () => {
+            if (isOverviewMode) {
+                setBrowseMode();
+            } else {
                 camera.position.set(START_POS.x, cameraHeight, START_POS.z);
                 controls.target.copy(START_TARGET);
                 controls.update();
@@ -3072,7 +2715,7 @@
             }
         });
 
-        $('btnHall3').addEventListener('click', () => {
+        document.getElementById('btnHall3').addEventListener('click', () => {
             if (isOverviewMode) setBrowseMode();
             camera.position.copy(HALL3_POS);
             controls.target.copy(HALL3_TARGET);
@@ -3080,16 +2723,16 @@
             showToast('📍 已切换到场馆3', 800);
         });
 
-        $('btnOverview').addEventListener('click', () => {
+        document.getElementById('btnOverview').addEventListener('click', () => {
             isOverviewMode ? setBrowseMode() : setOverviewMode();
         });
 
-        $('btnGetPos').addEventListener('click', () => {
+        document.getElementById('btnGetPos').addEventListener('click', () => {
             const pos = camera.position;
             const target = controls.target;
             const code =
                 `{ pos: new THREE.Vector3(${pos.x.toFixed(3)}, ${pos.y.toFixed(3)}, ${pos.z.toFixed(3)}), target: new THREE.Vector3(${target.x.toFixed(3)}, ${target.y.toFixed(3)}, ${target.z.toFixed(3)}) }`;
-            coordContent.innerHTML = `
+            document.getElementById('coordContent').innerHTML = `
                 📍 当前位置<br>
                 <code>${code}</code>
                 <div style="margin-top:6px;font-size:12px;color:#888;">
@@ -3099,36 +2742,42 @@
                     动线点代码: new THREE.Vector3(${pos.x.toFixed(3)}, 0, ${pos.z.toFixed(3)})
                 </div>
             `;
-            coordToast.classList.add('show');
+            document.getElementById('toastCoord').classList.add('show');
         });
 
-        $('coordClose').addEventListener('click', () => coordToast.classList.remove('show'));
-        coordToast.addEventListener('click', (e) => {
-            if (e.target === coordToast) coordToast.classList.remove('show');
+        document.getElementById('coordClose').addEventListener('click', () => {
+            document.getElementById('toastCoord').classList.remove('show');
         });
 
-        $('btnAddWaypoint').addEventListener('click', addWaypointAtCurrentPosition);
-        $('btnClearWaypoints').addEventListener('click', clearWaypoints);
-        $('btnClearLights').addEventListener('click', clearAllLights);
-        $('btnClearImages').addEventListener('click', clearAllImages);
+        document.getElementById('toastCoord').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('toastCoord')) {
+                document.getElementById('toastCoord').classList.remove('show');
+            }
+        });
 
-        $('btnExport').addEventListener('click', exportLayout);
-        $('btnImport').addEventListener('click', () => { importInput.click(); });
+        document.getElementById('btnAddWaypoint').addEventListener('click', addWaypointAtCurrentPosition);
+        document.getElementById('btnClearWaypoints').addEventListener('click', clearWaypoints);
+        document.getElementById('btnClearLights').addEventListener('click', clearAllLights);
+        document.getElementById('btnClearImages').addEventListener('click', clearAllImages);
 
-        importInput.addEventListener('change', (e) => {
+        document.getElementById('btnExport').addEventListener('click', exportLayout);
+        document.getElementById('btnImport').addEventListener('click', () => {
+            document.getElementById('importInput').click();
+        });
+
+        document.getElementById('importInput').addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) { importLayout(file); }
-            importInput.value = '';
+            document.getElementById('importInput').value = '';
         });
 
         loadSavedLayout();
 
-        $('btnToggleLight').addEventListener('click', toggleLights);
-        $('btnGlobalBright').addEventListener('click', toggleGlobalBright);
+        document.getElementById('btnToggleLight').addEventListener('click', toggleLights);
+        document.getElementById('btnGlobalBright').addEventListener('click', toggleGlobalBright);
 
-        const brightnessSlider = $('brightnessSlider');
-        const brightnessValue = $('brightnessValue');
-
+        const brightnessSlider = document.getElementById('brightnessSlider');
+        const brightnessValue = document.getElementById('brightnessValue');
         brightnessSlider.value = '0.70';
         brightnessValue.textContent = '0.70';
 
@@ -3138,8 +2787,7 @@
             updateBrightness(value);
         });
 
-        // --- 清空所有 ---
-        $('btnClearObjects').addEventListener('click', () => {
+        document.getElementById('btnClearObjects').addEventListener('click', () => {
             const total = customObjects.length + lightObjects.length + images.length;
             if (!total || !confirm(`确定删除所有物体、图片和灯光（共 ${total} 个）吗？`)) return;
             deselectObject();
@@ -3173,7 +2821,6 @@
             showToast('🗑️ 已清空所有物体、图片和灯光');
         });
 
-        // --- 模式切换 ---
         function setBrowseMode() {
             isOverviewMode = false;
             controls.enableZoom = false;
@@ -3183,10 +2830,10 @@
             controls.target.copy(START_TARGET);
             camera.position.set(START_POS.x, cameraHeight, START_POS.z);
             controls.update();
-            modeText.textContent = '浏览';
-            modeText.style.color = '#88ddff';
-            $('btnOverview').textContent = '🔭 俯瞰';
-            $('btnOverview').classList.remove('active');
+            document.getElementById('modeText').textContent = '浏览';
+            document.getElementById('modeText').style.color = '#88ddff';
+            document.getElementById('btnOverview').textContent = '🔭 俯瞰';
+            document.getElementById('btnOverview').classList.remove('active');
         }
 
         function setOverviewMode() {
@@ -3198,42 +2845,32 @@
             controls.target.copy(OVERVIEW_TARGET);
             camera.position.copy(OVERVIEW_POS);
             controls.update();
-            modeText.textContent = '俯瞰';
-            modeText.style.color = '#ffaa66';
-            $('btnOverview').textContent = '🚶 回到地面';
-            $('btnOverview').classList.add('active');
+            document.getElementById('modeText').textContent = '俯瞰';
+            document.getElementById('modeText').style.color = '#ffaa66';
+            document.getElementById('btnOverview').textContent = '🚶 回到地面';
+            document.getElementById('btnOverview').classList.add('active');
         }
 
-        // ============================================================
-        //  键盘控制
-        const keys = { w: false, a: false, s: false, d: false };
-        // ============================================================
-        // ============================================================
-        //  WASD 移动函数
-        // ============================================================
+        // WASD移动
         function move(dt) {
             if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
-
             const speed = 3.5;
             const fwd = new THREE.Vector3();
             camera.getWorldDirection(fwd);
             fwd.y = 0;
             fwd.normalize();
             const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-
             const d = new THREE.Vector3();
             if (keys.w) d.add(fwd.clone().multiplyScalar(speed * dt));
             if (keys.s) d.add(fwd.clone().multiplyScalar(-speed * dt));
             if (keys.a) d.add(right.clone().multiplyScalar(-speed * dt));
             if (keys.d) d.add(right.clone().multiplyScalar(speed * dt));
-
             if (d.length() > 0) {
                 camera.position.add(d);
                 controls.target.add(d);
             }
         }
-        //  时钟 & 动画循环
-        // ============================================================
+
         const clock = new THREE.Clock();
 
         function animate() {
@@ -3245,9 +2882,6 @@
             composer.render();
         }
 
-        // ============================================================
-        //  窗口自适应
-        // ============================================================
         window.addEventListener('resize', () => {
             const w = window.innerWidth;
             const h = window.innerHeight;
@@ -3257,13 +2891,9 @@
             composer.setSize(w, h);
         });
 
-        // ============================================================
-        //  键盘焦点 & 启动
-        // ============================================================
         renderer.domElement.setAttribute('tabindex', '0');
         renderer.domElement.focus();
 
-        // 清理多余括号
         if (selectedObject && isEditing) {
             showScaleHandles(selectedObject);
         }
