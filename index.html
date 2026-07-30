@@ -733,7 +733,7 @@
         document.body.appendChild(renderer.domElement);
 
        const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.copy(camera.position);  // ← 目标点跟随相机
+controls.target.add(d);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.maxPolarAngle = Math.PI / 2.1;
@@ -2868,7 +2868,7 @@ function move(dt) {
     if (d.lengthSq() > 0) {
         d.normalize().multiplyScalar(speed * dt);
         camera.position.add(d);
-        controls.target.copy(camera.position);
+        controls.target.add(d);  // ← 改成 add(d)，不是 copy(camera.position)
     }
 }
    
