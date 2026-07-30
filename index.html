@@ -2483,9 +2483,9 @@ model.userData = {
                 scene.add(model);
                 customObjects.push(model);
                 pushHistory(`导入 ${file.name}`, { obj: model });
-                showToast(`✅ 已导入: ${file.name}`, 2000);
+               showToast(`✅ 已导入: ${file.name}`, 2000);
 
-            } catch (err) {
+} catch (err) {
                 console.error('导入失败:', err);
                 showToast('❌ 导入失败: ' + err.message, 2000);
             }
