@@ -2466,15 +2466,17 @@ if (lightsData.length > 0) {
                         });
                         const border = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry),
                             borderMat);
-                        child.add(border);
-                        child.userData.borderMat = borderMat;
-                model.userData = {
+                           child.add(border);
+    child.userData.borderMat = borderMat;
+    } 
+}); 
+model.userData = {
                     isObject: true,
                     id: ++objectIdCounter,
                     name: file.name,
-                    color: color,
+                    color: 0x888888
                     normal: normal ? normal.clone() : null,
-                    originalColor: color,
+                    originalColor: 0x888888,
                     isImported: true
                 };
 
