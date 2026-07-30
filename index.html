@@ -749,7 +749,7 @@
         );
         composer.addPass(bloomPass);
 
-      / 构建展馆
+        // 构建展馆
         function buildExhibition(data) {
             if (!data) {
                 console.error('没有数据可渲染');
@@ -812,6 +812,10 @@
         }
 
         buildExhibition(exhibitionData);
+
+        // 展馆组
+        const galleryGroup = new THREE.Group();
+        scene.add(galleryGroup);
         // 展馆组
         const galleryGroup = new THREE.Group();
         scene.add(galleryGroup);
