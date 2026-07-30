@@ -733,7 +733,6 @@
         document.body.appendChild(renderer.domElement);
 
        const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.add(d);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.maxPolarAngle = Math.PI / 2.1;
@@ -2860,7 +2859,7 @@ function move(dt) {
     fwd.y = 0;
     fwd.normalize();
     const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-    const d = new THREE.Vector3();  // ← 必须有这行
+    const d = new THREE.Vector3();
     if (keys.w) d.add(fwd);
     if (keys.s) d.sub(fwd);
     if (keys.a) d.sub(right);
@@ -2871,6 +2870,7 @@ function move(dt) {
         controls.target.add(d);
     }
 }
+
    
         const clock = new THREE.Clock();
 
