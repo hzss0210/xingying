@@ -2852,7 +2852,7 @@ controls.update();
         }
 
         // WASD移动
-       function move(dt) {
+function move(dt) {
     if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
     const speed = 3.5;
     const fwd = new THREE.Vector3();
@@ -2874,7 +2874,6 @@ controls.update();
         d.normalize().multiplyScalar(speed * dt);
         camera.position.add(d);
         controls.target.add(d);
-}
 
         const clock = new THREE.Clock();
 
