@@ -746,7 +746,7 @@
         composer.addPass(renderPass);
         const bloomPass = new UnrealBloomPass(
             new THREE.Vector2(window.innerWidth, window.innerHeight),
-            0.3, 0.3, 0.15
+            0.2, 0.3, 0.8
         );
         composer.addPass(bloomPass);
 
@@ -2852,24 +2852,25 @@
         }
 
         // WASD移动
-        function move(dt) {
-            if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
-            const speed = 3.5;
-            const fwd = new THREE.Vector3();
-            camera.getWorldDirection(fwd);
-            fwd.y = 0;
-            fwd.normalize();
-            const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-            const d = new THREE.Vector3();
-            if (keys.w) d.add(fwd.clone().multiplyScalar(speed * dt));
-            if (keys.s) d.add(fwd.clone().multiplyScalar(-speed * dt));
-            if (keys.a) d.add(right.clone().multiplyScalar(-speed * dt));
-            if (keys.d) d.add(right.clone().multiplyScalar(speed * dt));
-            if (d.length() > 0) {
-                camera.position.add(d);
-                controls.target.add(d);
-            }
-        }
+         if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
+    const speed = 3.5;
+    const fwd = new THREE.Vector3();
+    camera.getWorldDirection(fwd);
+    fwd.y = 0;
+    if (fwd.lengthSq() < 0.001) return;
+    fwd.normalize();
+    const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
+    const d = new THREE.Vector3();
+    if (keys.w) d.add(fwd);
+    if (keys.s) d.sub(fwd);
+    if (keys.a) d.sub(right);
+    if (keys.d) d.add(right);
+    if (d.lengthSq() > 0) {
+        d.normalize().multiplyScalar(speed * dt);
+        camera.position.add(d);
+        controls.target.add(d);
+    }
+}
 
         const clock = new THREE.Clock();
 
