@@ -2860,7 +2860,7 @@ function move(dt) {
     fwd.y = 0;
     fwd.normalize();
     const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-    const d = new THREE.Vector3();
+    const d = new THREE.Vector3();  // ← 必须有这行
     if (keys.w) d.add(fwd);
     if (keys.s) d.sub(fwd);
     if (keys.a) d.sub(right);
@@ -2868,7 +2868,7 @@ function move(dt) {
     if (d.lengthSq() > 0) {
         d.normalize().multiplyScalar(speed * dt);
         camera.position.add(d);
-        controls.target.add(d);  // ← 改成 add(d)，不是 copy(camera.position)
+        controls.target.add(d);
     }
 }
    
