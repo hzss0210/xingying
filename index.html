@@ -2371,94 +2371,95 @@ if (lightsData.length > 0) {
         });
 
         // --- 导入模型 ---
-   modelInput.addEventListener('change', async (e) => {
-            const files = e.target.files;
-            if (!files.length) { modelInput.value = ''; return; }
+  modelInput.addEventListener('change', async (e) => {
+    const files = e.target.files;
+    if (!files.length) { modelInput.value = ''; return; }
 
-            const file = files[0];
-            const ext = file.name.split('.').pop().toLowerCase();
+    const file = files[0];
+    const ext = file.name.split('.').pop().toLowerCase();
 
-            let pos, normal;
-            if (pendingPos) {
-                pos = pendingPos.point.clone();
-                normal = pendingPos.normal.clone();
-                pendingPos = null;
-            } else {
-                const dir = new THREE.Vector3();
-                camera.getWorldDirection(dir);
-                pos = camera.position.clone().add(dir.multiplyScalar(3));
-                normal = new THREE.Vector3(0, 1, 0);
-            }
+    let pos, normal;
+    if (pendingPos) {
+        pos = pendingPos.point.clone();
+        normal = pendingPos.normal.clone();
+        pendingPos = null;
+    } else {
+        const dir = new THREE.Vector3();
+        camera.getWorldDirection(dir);
+        pos = camera.position.clone().add(dir.multiplyScalar(3));
+        normal = new THREE.Vector3(0, 1, 0);
+    }
 
-            try {
-                let model;
-                const url = URL.createObjectURL(file);
+    try {
+        let model;
+        const url = URL.createObjectURL(file);
 
-                if (ext === 'glb' || ext === 'gltf') {
-                    const gltfLoader = new GLTFLoader();
-                    model = await new Promise((resolve, reject) => {
-                        gltfLoader.load(url, (gltf) => resolve(gltf.scene), undefined, reject);
-                    });
-                } else if (ext === 'dae') {
-                    const daeLoader = new ColladaLoader();
-                    model = await new Promise((resolve, reject) => {
-                        daeLoader.load(url, (collada) => resolve(collada.scene), undefined, reject);
-                    });
-                } else if (ext === 'obj') {
-                    const objLoader = new OBJLoader();
-                    model = await new Promise((resolve, reject) => {
-                        objLoader.load(url, (obj) => resolve(obj), undefined, reject);
-                    });
-                } else {
-                    showToast('❌ 不支持的格式: ' + ext, 2000);
-                    modelInput.value = '';
-                    return;
-                }
-
-                model.position.copy(pos);
-                if (normal && normal.length() > 0.001 && Math.abs(normal.y) < 0.9) {
-                    const up = new THREE.Vector3(0, 1, 0);
-                    const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
-                    model.quaternion.copy(quat);
-                }
-
-                model.traverse((child) => {
-                    if (child.isMesh) {
-                        const borderMat = new THREE.LineBasicMaterial({
-                            color: 0x88ddff, transparent: true,
-                            opacity: 0
-                        });
-                        const border = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry),
-                            borderMat);
-                        child.add(border);
-                        child.userData.borderMat = borderMat;
-                    }
-                });
-
-                // ✅ 修复：使用 0x888888 替代未定义的 color 变量
-                model.userData = {
-                    isObject: true,
-                    id: ++objectIdCounter,
-                    name: file.name,
-                    color: 0x888888,
-                    normal: normal ? normal.clone() : null,
-                    originalColor: 0x888888,
-                    isImported: true
-                };
-
-                scene.add(model);
-                customObjects.push(model);
-                pushHistory(`导入 ${file.name}`, { obj: model });
-                showToast(`✅ 已导入: ${file.name}`, 2000);
-
-            } catch (err) {
-                console.error('导入失败:', err);
-                showToast('❌ 导入失败: ' + err.message, 2000);
-            }
-
+        if (ext === 'glb' || ext === 'gltf') {
+            const gltfLoader = new GLTFLoader();
+            model = await new Promise((resolve, reject) => {
+                gltfLoader.load(url, (gltf) => resolve(gltf.scene), undefined, reject);
+            });
+        } else if (ext === 'dae') {
+            const daeLoader = new ColladaLoader();
+            model = await new Promise((resolve, reject) => {
+                daeLoader.load(url, (collada) => resolve(collada.scene), undefined, reject);
+            });
+        } else if (ext === 'obj') {
+            const objLoader = new OBJLoader();
+            model = await new Promise((resolve, reject) => {
+                objLoader.load(url, (obj) => resolve(obj), undefined, reject);
+            });
+        } else {
+            showToast('❌ 不支持的格式: ' + ext, 2000);
             modelInput.value = '';
+            return;
+        }
+
+        model.position.copy(pos);
+        if (normal && normal.length() > 0.001 && Math.abs(normal.y) < 0.9) {
+            const up = new THREE.Vector3(0, 1, 0);
+            const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
+            model.quaternion.copy(quat);
+        }
+
+        model.traverse((child) => {
+            if (child.isMesh) {
+                const borderMat = new THREE.LineBasicMaterial({
+                    color: 0x88ddff,
+                    transparent: true,
+                    opacity: 0
+                });
+                const border = new THREE.LineSegments(
+                    new THREE.EdgesGeometry(child.geometry),
+                    borderMat
+                );
+                child.add(border);
+                child.userData.borderMat = borderMat;
+            }
         });
-        
+
+        model.userData = {
+            isObject: true,
+            id: ++objectIdCounter,
+            name: file.name,
+            color: 0x888888,
+            normal: normal ? normal.clone() : null,
+            originalColor: 0x888888,
+            isImported: true
+        };
+
+        scene.add(model);
+        customObjects.push(model);
+        pushHistory(`导入 ${file.name}`, { obj: model });
+        showToast(`✅ 已导入: ${file.name}`, 2000);
+
+    } catch (err) {
+        console.error('导入失败:', err);
+        showToast('❌ 导入失败: ' + err.message, 2000);
+    }
+
+    modelInput.value = '';
+});
                         const borderMat = new THREE.LineBasicMaterial({
                             color: 0x88ddff, transparent: true,
                             opacity: 0
@@ -2467,9 +2468,6 @@ if (lightsData.length > 0) {
                             borderMat);
                         child.add(border);
                         child.userData.borderMat = borderMat;
-    
-                });
-
                 model.userData = {
                     isObject: true,
                     id: ++objectIdCounter,
