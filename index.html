@@ -3266,17 +3266,7 @@
         }
 
         // ============================================================
-        //  动画循环
-        // ============================================================
-        const clock = new THREE.Clock();
 
-        function animate() {
-            requestAnimationFrame(animate);
-            const dt = clock.getDelta();
-            move(dt);
-            updateMovement(dt);
-            controls.update();
-            composer.render();
 
             if (selectedObject && isEditing) {
                 showScaleHandles(selectedObject);
