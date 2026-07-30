@@ -2341,9 +2341,36 @@ if (lightsData.length > 0) {
             }
         });
 
-        document.addEventListener('keydown', (e) => {
+                        document.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            
+            // WASD 移动
+            if ('wasd'.includes(key)) {
+                keys[key] = true;
+                e.preventDefault();
+            }
+            
+            // E/Q 升降视角
+            if (e.key === 'e' || e.key === 'E') {
+                adjustCameraHeight(0.2);
+                e.preventDefault();
+            }
+            if (e.key === 'q' || e.key === 'Q') {
+                adjustCameraHeight(-0.2);
+                e.preventDefault();
+            }
+            
+            // ESC 取消拖拽
             if (e.key === 'Escape' && isDraggingToPlace) {
                 cancelDragging();
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            if ('wasd'.includes(key)) {
+                keys[key] = false;
                 e.preventDefault();
             }
         });
@@ -3181,7 +3208,32 @@ if (lightsData.length > 0) {
 
         // ============================================================
         //  键盘控制
+        const keys = { w: false, a: false, s: false, d: false };
                // ============================================================
+             // ============================================================
+        //  WASD 移动函数
+        // ============================================================
+        function move(dt) {
+            if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
+            
+            const speed = 3.5;
+            const fwd = new THREE.Vector3();
+            camera.getWorldDirection(fwd);
+            fwd.y = 0;
+            fwd.normalize();
+            const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
+            
+            const d = new THREE.Vector3();
+            if (keys.w) d.add(fwd.clone().multiplyScalar(speed * dt));
+            if (keys.s) d.add(fwd.clone().multiplyScalar(-speed * dt));
+            if (keys.a) d.add(right.clone().multiplyScalar(-speed * dt));
+            if (keys.d) d.add(right.clone().multiplyScalar(speed * dt));
+            
+            if (d.length() > 0) {
+                camera.position.add(d);
+                controls.target.add(d);
+            }
+        }
         //  时钟 & 动画循环
         // ============================================================
         const clock = new THREE.Clock();
