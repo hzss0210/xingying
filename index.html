@@ -967,13 +967,6 @@ if (lightsData.length > 0) {
         // ===== 7. 调用 buildExhibition =====
         buildExhibition(exhibitionData, scene);
 
-        // ===== 8. 动画循环 =====
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            composer.render();
-        }
-        animate();
 
         // ===== 9. 窗口大小自适应 =====
         window.addEventListener('resize', () => {
