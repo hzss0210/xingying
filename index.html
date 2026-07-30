@@ -778,7 +778,7 @@ controls.update();
                             mesh.quaternion.set(imgData.quaternion[0], imgData.quaternion[1], imgData.quaternion[2],
                                 imgData.quaternion[3]);
                         }
-                        galleryGroup.add(mesh);
+                        scene.add(mesh);
                     } catch (err) {
                         console.error(`创建图片 ${index} 失败:`, err);
                     }
@@ -1004,6 +1004,7 @@ controls.update();
                     if (c.material) c.material.dispose();
                 }
                 const model = collada.scene;
+                model.scale.set(1, 1, 1); 
                 galleryGroup.add(model);
                 modelLoaded = true;
                 document.getElementById('loadStatus').textContent = '✅ 模型加载成功！';
