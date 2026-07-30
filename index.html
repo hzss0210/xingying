@@ -835,10 +835,12 @@
                         const width = imgData.size || 1;
                         const height = width / (imgData.asp || 1);
                         const geometry = new THREE.PlaneGeometry(width, height);
-                        const material = new THREE.MeshBasicMaterial({ 
-                            map: texture,
-                            side: THREE.DoubleSide
-                        });
+                       const material = new THREE.MeshBasicMaterial({ 
+    map: texture,
+    side: THREE.DoubleSide,
+    transparent: true,
+    depthWrite: false
+});
                         const mesh = new THREE.Mesh(geometry, material);
                         
                         if (imgData.position && imgData.position.length === 3) {
@@ -876,7 +878,7 @@ if (lightsData.length > 0) {
             const intensity = lightData.intensity || 1.0;
             const color = lightData.color || 0xffeedd;
             
-            const light = new THREE.PointLight(color, intensity * 0.5, 12);
+            const light = new THREE.PointLight(color, intensity * 0.15, 12);
             light.position.set(pos[0], pos[1], pos[2]);
             scene.add(light);
             
@@ -924,7 +926,7 @@ if (lightsData.length > 0) {
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x1a1a2a);
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
-        let cameraHeight = 1.75;
+        let cameraHeight = 2.75;
 
         const START_POS = new THREE.Vector3(-6.749, cameraHeight, -0.084);
         const START_TARGET = new THREE.Vector3(-6.048, 0.8, -4.970);
@@ -988,7 +990,7 @@ if (lightsData.length > 0) {
         let lightsOn = true;
         let globalBright = false;
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
         const allLights = [ambientLight];
@@ -1101,12 +1103,12 @@ if (lightsData.length > 0) {
         // --- 备用展馆 ---
         function buildSimpleRoom() {
             const g = new THREE.Group();
-            const wallMat = new THREE.MeshStandardMaterial({
+            const wallMat = new THREE.MeshBasicMaterial({
                 color: 0x3a3a5a, roughness: 0.8, metalness: 0.0, side: THREE
                     .DoubleSide
             });
-            const floorMat = new THREE.MeshStandardMaterial({ color: 0x2a2a4a, roughness: 0.9, side: THREE.DoubleSide });
-            const ceilMat = new THREE.MeshStandardMaterial({
+            const floorMat = new THREE.MeshBasicMaterial({ color: 0x2a2a4a, roughness: 0.9, side: THREE.DoubleSide });
+            const ceilMat = new THREE.MeshBasicMaterial({
                 color: 0x2a2a4a, transparent: true, opacity: 0.2, side: THREE
                     .DoubleSide
             });
@@ -3186,128 +3188,47 @@ if (lightsData.length > 0) {
 
         // ============================================================
         //  键盘控制
+               // ============================================================
+        //  时钟 & 动画循环
         // ============================================================
-        const keys = { w: false, a: false, s: false, d: false };
-        document.addEventListener('keydown', (e) => {
-            const key = e.key.toLowerCase();
-            if ('wasd'.includes(key)) {
-                keys[key] = true;
-                e.preventDefault();
-            }
+        const clock = new THREE.Clock();
 
-            if (e.key === 'e' || e.key === 'E') {
-                adjustCameraHeight(0.2);
-                e.preventDefault();
-            }
-            if (e.key === 'q' || e.key === 'Q') {
-                adjustCameraHeight(-0.2);
-                e.preventDefault();
-            }
-
-            if (e.key === 'Escape') {
-                if (isDraggingToPlace) {
-                    cancelDragging();
-                    e.preventDefault(); return;
-                }
-                deselectObject();
-                deselectLight();
-                deselectImage();
-                hideScaleHandles();
-                hideImageResizeHandles();
-                coordToast.classList.remove('show');
-                showToast('✅ 已退出');
-                e.preventDefault();
-            }
-            if ((e.key === 'Delete' || e.key === 'Backspace')) {
-                if (selectedObject) {
-                    removeObject(selectedObject);
-                    deselectObject();
-                    hideScaleHandles();
-                } else if (selectedImage) {
-                    removeImage(selectedImage);
-                    deselectImage();
-                    hideImageResizeHandles();
-                } else if (selectedLight) {
-                    removeLight(selectedLight);
-                    deselectLight();
-                }
-                e.preventDefault();
-            }
-            if (e.ctrlKey && e.key === 'z') {
-                e.preventDefault();
-                undo();
-            }
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                saveState();
-            }
-        });
-        document.addEventListener('keyup', (e) => {
-            const key = e.key.toLowerCase();
-            if ('wasd'.includes(key)) {
-                keys[key] = false;
-                e.preventDefault();
-            }
-        });
-
-        function move(dt) {
-            if (isImageEditing && selectedImage) {
-                const speed = 2.5;
-                const fwd = new THREE.Vector3();
-                camera.getWorldDirection(fwd);
-                fwd.y = 0;
-                fwd.normalize();
-                const d = new THREE.Vector3();
-                if (keys.a) d.add(fwd.clone().multiplyScalar(speed * dt));
-                if (keys.d) d.add(fwd.clone().multiplyScalar(-speed * dt));
-                if (d.length()) {
-                    selectedImage.position.add(d);
-                    showImageResizeHandles(selectedImage);
-                }
-                return;
-            }
-
-            if (isMoving || isOverviewMode || isEditing || isLightEditing || isImageEditing || isScaling ||
-                isImageResizing || isDraggingToPlace || isDragging) return;
-            const speed = 3.5;
-            const fwd = new THREE.Vector3();
-            camera.getWorldDirection(fwd);
-            fwd.y = 0;
-            fwd.normalize();
-            const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-            const d = new THREE.Vector3();
-            if (keys.w) d.add(fwd.clone().multiplyScalar(speed * dt));
-            if (keys.s) d.add(fwd.clone().multiplyScalar(-speed * dt));
-            if (keys.a) d.add(right.clone().multiplyScalar(-speed * dt));
-            if (keys.d) d.add(right.clone().multiplyScalar(speed * dt));
-            if (d.length()) {
-                camera.position.add(d);
-                controls.target.add(d);
-            }
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = clock.getDelta();
+            move(dt);
+            updateMovement(dt);
+            controls.update();
+            composer.render();
         }
 
         // ============================================================
-
-
-            if (selectedObject && isEditing) {
-                showScaleHandles(selectedObject);
-            }
-            if (selectedImage && isImageEditing) {
-                showImageResizeHandles(selectedImage);
-            }
-
-
-        animate();
-
+        //  窗口自适应
+        // ============================================================
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(w, h);
+            composer.setSize(w, h);
         });
 
+        // ============================================================
+        //  键盘焦点 & 启动
+        // ============================================================
         renderer.domElement.setAttribute('tabindex', '0');
         renderer.domElement.focus();
+
+        // 清理多余括号
+        if (selectedObject && isEditing) {
+            showScaleHandles(selectedObject);
+        }
+        if (selectedImage && isImageEditing) {
+            showImageResizeHandles(selectedImage);
+        }
+
+        animate();
 
         console.log('✅ 展馆已加载');
         console.log('🖼️ 右键墙面 → 上传图片 / 放置灯光');
@@ -3318,5 +3239,4 @@ if (lightsData.length > 0) {
         console.log('📍 动线点移动保持视角高度不变');
     </script>
 </body>
-
 </html>
