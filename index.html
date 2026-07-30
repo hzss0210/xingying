@@ -772,7 +772,17 @@
       <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 
     <script type="module">
-        // 加载大 JSON 数据（压缩版 .gz）
+        // ===== 1. 所有 import 放在最顶部 =====
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        // ===== 2. 加载大 JSON 数据（压缩版 .gz） =====
         const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/2026.json.gz';
 
         async function loadExhibitionData() {
@@ -784,15 +794,11 @@
                 }
 
                 console.log('正在解压数据...');
-                // 获取二进制数据（因为现在是 .gz 文件）
                 const arrayBuffer = await response.arrayBuffer();
                 const byteArray = new Uint8Array(arrayBuffer);
-
-                // 用 pako 解压成字符串
                 const decompressedText = pako.ungzip(byteArray, { to: 'string' });
 
                 console.log('正在解析 JSON...');
-                // 解析为 JavaScript 对象
                 const data = JSON.parse(decompressedText);
 
                 console.log('展馆数据加载成功！', data);
@@ -803,23 +809,74 @@
             }
         }
 
-        // 等待数据加载完成后，再启动展馆
+        // ===== 3. 等待数据加载完成 =====
         const exhibitionData = await loadExhibitionData();
-        // 查看数据内容
-console.log('数据加载完成，开始构建场景...');
-console.log('图片数量:', exhibitionData?.images?.length);
-console.log('灯光数量:', exhibitionData?.Lights?.length);
-console.log('图片数据示例:', exhibitionData?.images?.[0]);
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-        // --- DOM ---
+        console.log('数据加载完成，开始构建场景...');
+        console.log('图片数量:', exhibitionData?.images?.length);
+        console.log('灯光数量:', exhibitionData?.lights?.length);
+        console.log('图片数据示例:', exhibitionData?.images?.[0]);
+
+        // ===== 4. 定义构建展馆的函数 =====
+        function buildExhibition(data, scene) {
+            if (!data) {
+                console.error('没有数据可渲染');
+                return;
+            }
+            
+            console.log('开始构建展馆，图片数量:', data.images?.length || 0);
+            
+            const textureLoader = new THREE.TextureLoader();
+            
+            if (data.images && data.images.length > 0) {
+                data.images.forEach((imgData, index) => {
+                    try {
+                        const texture = textureLoader.load(imgData.url);
+                        const width = imgData.size || 1;
+                        const height = width / (imgData.asp || 1);
+                        const geometry = new THREE.PlaneGeometry(width, height);
+                        const material = new THREE.MeshBasicMaterial({ 
+                            map: texture,
+                            side: THREE.DoubleSide
+                        });
+                        const mesh = new THREE.Mesh(geometry, material);
+                        
+                        if (imgData.position && imgData.position.length === 3) {
+                            mesh.position.set(
+                                imgData.position[0],
+                                imgData.position[1],
+                                imgData.position[2]
+                            );
+                        }
+                        
+                        if (imgData.quaternion && imgData.quaternion.length === 4) {
+                            mesh.quaternion.set(
+                                imgData.quaternion[0],
+                                imgData.quaternion[1],
+                                imgData.quaternion[2],
+                                imgData.quaternion[3]
+                            );
+                        }
+                        
+                        scene.add(mesh);
+                    } catch (err) {
+                        console.error(`创建图片 ${index} 失败:`, err);
+                    }
+                });
+                console.log(`✅ 已创建 ${data.images.length} 张图片`);
+            }
+            
+            const lightsData = data.lights || data.Lights || [];
+            if (lightsData.length > 0) {
+                lightsData.forEach(() => {
+                    const light = new THREE.AmbientLight(0xffffff, 0.5);
+                    scene.add(light);
+                });
+                console.log(`✅ 已创建 ${lightsData.length} 个灯光`);
+            }
+        }
+
+        // ===== 5. DOM 引用 =====
         const $ = id => document.getElementById(id);
         const loading = $('loading');
         const loadStatus = $('loadStatus');
@@ -842,7 +899,7 @@ console.log('图片数据示例:', exhibitionData?.images?.[0]);
             toast._t = setTimeout(() => toast.classList.remove('show'), dur);
         }
 
-        // --- 场景 ---
+        // ===== 6. 场景代码 =====
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x1a1a2a);
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -884,6 +941,28 @@ console.log('图片数据示例:', exhibitionData?.images?.[0]);
         );
         composer.addPass(bloomPass);
 
+        // ===== 7. 调用 buildExhibition =====
+        buildExhibition(exhibitionData, scene);
+
+        // ===== 8. 动画循环 =====
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            composer.render();
+        }
+        animate();
+
+        // ===== 9. 窗口大小自适应 =====
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            composer.setSize(w, h);
+        });
+
+        // ===== 10. 你原有的其他代码（灯光控制、展馆、对象管理等）继续放在这里 =====
         // --- 灯光系统 ---
         let lightsOn = true;
         let globalBright = false;
@@ -994,6 +1073,9 @@ console.log('图片数据示例:', exhibitionData?.images?.[0]);
             brown: 0x8B4513,
             default: 0x888888
         };
+
+        // ===== 你后面的其他代码（按钮事件、交互逻辑等）继续放在这里 =====
+        // ... 你的其他代码 ...
 
         // --- 备用展馆 ---
         function buildSimpleRoom() {
