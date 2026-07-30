@@ -3188,3 +3188,23 @@
 </body>
 
 </html>
+// 使用 encodeURI 处理带特殊字符的链接，这样最安全
+const jsonUrl = 'https://79lz6lhwvsbnrsro.public.blob.vercel-storage.com/_2026-07-30%20%286%29.json';
+
+async function loadData() {
+  try {
+    const response = await fetch(jsonUrl);
+    if (!response.ok) {
+      throw new Error(`加载失败: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('数据加载成功！', data);
+    // 在这里调用你的展馆渲染函数，把 data 传进去
+    // 比如：renderExhibition(data);
+  } catch (error) {
+    console.error('加载数据出错:', error);
+  }
+}
+
+// 调用函数
+loadData();
