@@ -2871,10 +2871,7 @@ function move(dt) {
         controls.target.copy(camera.position);
     }
 }
-        d.normalize().multiplyScalar(speed * dt);
-        camera.position.add(d);
-        controls.target.add(d);
-
+   
         const clock = new THREE.Clock();
 
         function animate() {
