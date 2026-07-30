@@ -761,10 +761,10 @@
         <div class="handle handle-br" data-corner="br"></div>
     </div>
 
-<script type="importmap">
+    <script type="importmap">
 {"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
 </script>
-      <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
 
     <script type="module">
         // ===== 1. 所有 import 放在最顶部 =====
@@ -818,11 +818,11 @@
                 console.error('没有数据可渲染');
                 return;
             }
-            
+
             console.log('开始构建展馆，图片数量:', data.images?.length || 0);
-            
+
             const textureLoader = new THREE.TextureLoader();
-            
+
             if (data.images && data.images.length > 0) {
                 data.images.forEach((imgData, index) => {
                     try {
@@ -830,14 +830,14 @@
                         const width = imgData.size || 1;
                         const height = width / (imgData.asp || 1);
                         const geometry = new THREE.PlaneGeometry(width, height);
-                       const material = new THREE.MeshBasicMaterial({ 
-    map: texture,
-    side: THREE.DoubleSide,
-    transparent: true,
-    depthWrite: false
-});
+                        const material = new THREE.MeshBasicMaterial({
+                            map: texture,
+                            side: THREE.DoubleSide,
+                            transparent: true,
+                            depthWrite: false
+                        });
                         const mesh = new THREE.Mesh(geometry, material);
-                        
+
                         if (imgData.position && imgData.position.length === 3) {
                             mesh.position.set(
                                 imgData.position[0],
@@ -845,7 +845,7 @@
                                 imgData.position[2]
                             );
                         }
-                        
+
                         if (imgData.quaternion && imgData.quaternion.length === 4) {
                             mesh.quaternion.set(
                                 imgData.quaternion[0],
@@ -854,7 +854,7 @@
                                 imgData.quaternion[3]
                             );
                         }
-                        
+
                         scene.add(mesh);
                     } catch (err) {
                         console.error(`创建图片 ${index} 失败:`, err);
@@ -862,36 +862,36 @@
                 });
                 console.log(`✅ 已创建 ${data.images.length} 张图片`);
             }
-            
-           // 处理灯光（使用点光源，而非环境光）
-const lightsData = data.lights || data.Lights || [];
-if (lightsData.length > 0) {
-    lightsData.forEach((lightData, index) => {
-        try {
-            // 从 JSON 读取灯光位置和强度
-            const pos = lightData.position || [0, 2, 0];
-            const intensity = lightData.intensity || 1.0;
-            const color = lightData.color || 0xffeedd;
-            
-            const light = new THREE.PointLight(color, intensity * 0.15, 12);
-            light.position.set(pos[0], pos[1], pos[2]);
-            scene.add(light);
-            
-            // 可选：添加一个小球体表示灯光位置
-            if (index < 5) { // 只显示前5个的位置标记，避免太多
-                const sphere = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.08, 8, 8),
-                    new THREE.MeshBasicMaterial({ color: 0xffdd88 })
-                );
-                sphere.position.copy(light.position);
-                scene.add(sphere);
+
+            // 处理灯光（使用点光源，而非环境光）
+            const lightsData = data.lights || data.Lights || [];
+            if (lightsData.length > 0) {
+                lightsData.forEach((lightData, index) => {
+                    try {
+                        // 从 JSON 读取灯光位置和强度
+                        const pos = lightData.position || [0, 2, 0];
+                        const intensity = lightData.intensity || 1.0;
+                        const color = lightData.color || 0xffeedd;
+
+                        const light = new THREE.PointLight(color, intensity * 0.15, 12);
+                        light.position.set(pos[0], pos[1], pos[2]);
+                        scene.add(light);
+
+                        // 可选：添加一个小球体表示灯光位置
+                        if (index < 5) { // 只显示前5个的位置标记，避免太多
+                            const sphere = new THREE.Mesh(
+                                new THREE.SphereGeometry(0.08, 8, 8),
+                                new THREE.MeshBasicMaterial({ color: 0xffdd88 })
+                            );
+                            sphere.position.copy(light.position);
+                            scene.add(sphere);
+                        }
+                    } catch (err) {
+                        console.warn(`灯光 ${index} 加载失败:`, err);
+                    }
+                });
+                console.log(`✅ 已创建 ${lightsData.length} 个点光源`);
             }
-        } catch (err) {
-            console.warn(`灯光 ${index} 加载失败:`, err);
-        }
-    });
-    console.log(`✅ 已创建 ${lightsData.length} 个点光源`);
-}
         }
 
         // ===== 5. DOM 引用 =====
@@ -2336,15 +2336,15 @@ if (lightsData.length > 0) {
             }
         });
 
-                        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', (e) => {
             const key = e.key.toLowerCase();
-            
+
             // WASD 移动
             if ('wasd'.includes(key)) {
                 keys[key] = true;
                 e.preventDefault();
             }
-            
+
             // E/Q 升降视角
             if (e.key === 'e' || e.key === 'E') {
                 adjustCameraHeight(0.2);
@@ -2354,7 +2354,7 @@ if (lightsData.length > 0) {
                 adjustCameraHeight(-0.2);
                 e.preventDefault();
             }
-            
+
             // ESC 取消拖拽
             if (e.key === 'Escape' && isDraggingToPlace) {
                 cancelDragging();
@@ -2371,110 +2371,78 @@ if (lightsData.length > 0) {
         });
 
         // --- 导入模型 ---
-  modelInput.addEventListener('change', async (e) => {
-    const files = e.target.files;
-    if (!files.length) { modelInput.value = ''; return; }
+        modelInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (!files.length) { modelInput.value = ''; return; }
 
-    const file = files[0];
-    const ext = file.name.split('.').pop().toLowerCase();
+            const file = files[0];
+            const ext = file.name.split('.').pop().toLowerCase();
 
-    let pos, normal;
-    if (pendingPos) {
-        pos = pendingPos.point.clone();
-        normal = pendingPos.normal.clone();
-        pendingPos = null;
-    } else {
-        const dir = new THREE.Vector3();
-        camera.getWorldDirection(dir);
-        pos = camera.position.clone().add(dir.multiplyScalar(3));
-        normal = new THREE.Vector3(0, 1, 0);
-    }
-
-    try {
-        let model;
-        const url = URL.createObjectURL(file);
-
-        if (ext === 'glb' || ext === 'gltf') {
-            const gltfLoader = new GLTFLoader();
-            model = await new Promise((resolve, reject) => {
-                gltfLoader.load(url, (gltf) => resolve(gltf.scene), undefined, reject);
-            });
-        } else if (ext === 'dae') {
-            const daeLoader = new ColladaLoader();
-            model = await new Promise((resolve, reject) => {
-                daeLoader.load(url, (collada) => resolve(collada.scene), undefined, reject);
-            });
-        } else if (ext === 'obj') {
-            const objLoader = new OBJLoader();
-            model = await new Promise((resolve, reject) => {
-                objLoader.load(url, (obj) => resolve(obj), undefined, reject);
-            });
-        } else {
-            showToast('❌ 不支持的格式: ' + ext, 2000);
-            modelInput.value = '';
-            return;
-        }
-
-        model.position.copy(pos);
-        if (normal && normal.length() > 0.001 && Math.abs(normal.y) < 0.9) {
-            const up = new THREE.Vector3(0, 1, 0);
-            const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
-            model.quaternion.copy(quat);
-        }
-
-        model.traverse((child) => {
-            if (child.isMesh) {
-                const borderMat = new THREE.LineBasicMaterial({
-                    color: 0x88ddff,
-                    transparent: true,
-                    opacity: 0
-                });
-                const border = new THREE.LineSegments(
-                    new THREE.EdgesGeometry(child.geometry),
-                    borderMat
-                );
-                child.add(border);
-                child.userData.borderMat = borderMat;
+            let pos, normal;
+            if (pendingPos) {
+                pos = pendingPos.point.clone();
+                normal = pendingPos.normal.clone();
+                pendingPos = null;
+            } else {
+                const dir = new THREE.Vector3();
+                camera.getWorldDirection(dir);
+                pos = camera.position.clone().add(dir.multiplyScalar(3));
+                normal = new THREE.Vector3(0, 1, 0);
             }
-        });
 
-        model.userData = {
-            isObject: true,
-            id: ++objectIdCounter,
-            name: file.name,
-            color: 0x888888,
-            normal: normal ? normal.clone() : null,
-            originalColor: 0x888888,
-            isImported: true
-        };
+            try {
+                let model;
+                const url = URL.createObjectURL(file);
 
-        scene.add(model);
-        customObjects.push(model);
-        pushHistory(`导入 ${file.name}`, { obj: model });
-        showToast(`✅ 已导入: ${file.name}`, 2000);
+                if (ext === 'glb' || ext === 'gltf') {
+                    const gltfLoader = new GLTFLoader();
+                    model = await new Promise((resolve, reject) => {
+                        gltfLoader.load(url, (gltf) => resolve(gltf.scene), undefined, reject);
+                    });
+                } else if (ext === 'dae') {
+                    const daeLoader = new ColladaLoader();
+                    model = await new Promise((resolve, reject) => {
+                        daeLoader.load(url, (collada) => resolve(collada.scene), undefined, reject);
+                    });
+                } else if (ext === 'obj') {
+                    const objLoader = new OBJLoader();
+                    model = await new Promise((resolve, reject) => {
+                        objLoader.load(url, (obj) => resolve(obj), undefined, reject);
+                    });
+                } else {
+                    showToast('❌ 不支持的格式: ' + ext, 2000);
+                    modelInput.value = '';
+                    return;
+                }
 
-    } catch (err) {
-        console.error('导入失败:', err);
-        showToast('❌ 导入失败: ' + err.message, 2000);
-    }
+                model.position.copy(pos);
+                if (normal && normal.length() > 0.001 && Math.abs(normal.y) < 0.9) {
+                    const up = new THREE.Vector3(0, 1, 0);
+                    const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
+                    model.quaternion.copy(quat);
+                }
 
-    modelInput.value = '';
-});
+                model.traverse((child) => {
+                    if (child.isMesh) {
                         const borderMat = new THREE.LineBasicMaterial({
-                            color: 0x88ddff, transparent: true,
+                            color: 0x88ddff,
+                            transparent: true,
                             opacity: 0
                         });
-                        const border = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry),
-                            borderMat);
-                           child.add(border);
-    child.userData.borderMat = borderMat;
-    } 
-}); 
-model.userData = {
+                        const border = new THREE.LineSegments(
+                            new THREE.EdgesGeometry(child.geometry),
+                            borderMat
+                        );
+                        child.add(border);
+                        child.userData.borderMat = borderMat;
+                    }
+                });
+
+                model.userData = {
                     isObject: true,
                     id: ++objectIdCounter,
                     name: file.name,
-                    color: 0x888888
+                    color: 0x888888,
                     normal: normal ? normal.clone() : null,
                     originalColor: 0x888888,
                     isImported: true
@@ -2483,9 +2451,9 @@ model.userData = {
                 scene.add(model);
                 customObjects.push(model);
                 pushHistory(`导入 ${file.name}`, { obj: model });
-               showToast(`✅ 已导入: ${file.name}`, 2000);
+                showToast(`✅ 已导入: ${file.name}`, 2000);
 
-} catch (err) {
+            } catch (err) {
                 console.error('导入失败:', err);
                 showToast('❌ 导入失败: ' + err.message, 2000);
             }
@@ -2681,8 +2649,8 @@ model.userData = {
             waypointMarkers.forEach(m => {
                 scene.remove(m);
                 m.children.forEach(c => {
-                    if (c.geometry) c.geometry.dispose(); if (c.material) c.material
-                        .dispose();
+                    if (c.geometry) c.geometry.dispose();
+                    if (c.material) c.material.dispose();
                 });
             });
             waypointMarkers.length = 0;
@@ -3239,26 +3207,26 @@ model.userData = {
         // ============================================================
         //  键盘控制
         const keys = { w: false, a: false, s: false, d: false };
-               // ============================================================
-             // ============================================================
+        // ============================================================
+        // ============================================================
         //  WASD 移动函数
         // ============================================================
         function move(dt) {
             if (isDraggingToPlace || isEditing || isLightEditing || isImageEditing || isMoving) return;
-            
+
             const speed = 3.5;
             const fwd = new THREE.Vector3();
             camera.getWorldDirection(fwd);
             fwd.y = 0;
             fwd.normalize();
             const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
-            
+
             const d = new THREE.Vector3();
             if (keys.w) d.add(fwd.clone().multiplyScalar(speed * dt));
             if (keys.s) d.add(fwd.clone().multiplyScalar(-speed * dt));
             if (keys.a) d.add(right.clone().multiplyScalar(-speed * dt));
             if (keys.d) d.add(right.clone().multiplyScalar(speed * dt));
-            
+
             if (d.length() > 0) {
                 camera.position.add(d);
                 controls.target.add(d);
